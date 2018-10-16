@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1457265334711320}
+  m_IsPrefabAsset: 1
+--- !u!1 &1457265334711320
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4282126667544430}
+  - component: {fileID: 114305548322745816}
+  - component: {fileID: 114229123787930664}
+  m_Layer: 0
+  m_Name: MenuManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4282126667544430
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1457265334711320}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 422.8404, y: 444.28284, z: -358.203}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114229123787930664
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1457265334711320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 568ff2927c4c0c54bae56f7dfd5d53e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selected: {fileID: 21300000, guid: ebe76bc834738294e9a2ec979238d714, type: 3}
+  normal: {fileID: 21300002, guid: ebe76bc834738294e9a2ec979238d714, type: 3}
+  up: {fileID: 0}
+  left: {fileID: 0}
+  down: {fileID: 0}
+  right: {fileID: 0}
+  jump: {fileID: 0}
+  crouch: {fileID: 0}
+  dash: {fileID: 0}
+  interact: {fileID: 0}
+--- !u!114 &114305548322745816
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1457265334711320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fd9045bd162961418b19cceeff263b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraSwap: {fileID: 0}
+  controls: {fileID: 0}
+  volume: {fileID: 0}
+  graphics: {fileID: 0}
+  masterMixer: {fileID: 24100000, guid: 8922c4e9f8e7a3844a1f4e9cd7479b52, type: 2}
+  masterSlider: {fileID: 0}
+  resolutionDropdown: {fileID: 0}
