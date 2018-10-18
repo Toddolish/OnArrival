@@ -197,10 +197,29 @@ public class Weapon : MonoBehaviour
 	{
 		muzzelFlash.Play();
 		currentJavAmmo--;
-		GameObject javalinPrefab = Instantiate(Javalin, javSpawnPoint.position, javSpawnPoint.rotation);
-		javalinPrefab.transform.Rotate(Vector3.right * 90);
-	}
+		RaycastHit hit;
+		if (Physics.Raycast(javSpawnPoint.transform.position, fpsCam.transform.forward, out hit, range, layersToHit))
+		{
+			Debug.Log(hit.transform.name);
+			Target target = hit.transform.GetComponent<Target>();
+			Enemy enemy = hit.transform.GetComponent<Enemy>();
+			if (target != null)
+			{
+				target.TakeDamage(damage);
+			}
+			if (enemy != null)
+			{
+				enemy.TakeDamage(damage);
+			}
 
+			if (hit.rigidbody != null)
+			{
+				hit.rigidbody.AddForce(-hit.normal * impactForce);
+			}
+			GameObject javalinPrefab = Instantiate(Javalin, javSpawnPoint.position, javSpawnPoint.rotation);
+			javalinPrefab.transform.Rotate(Vector3.right * 90);
+		}
+	}
 	void shootOrb()
 	{
 		muzzelFlash.Play();
