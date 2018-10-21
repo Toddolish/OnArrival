@@ -8,18 +8,20 @@ public class Projectile : MonoBehaviour {
 	CapsuleCollider CapCollider;
 	bool flying = true;
 	float depth = 0.30F;
+	Camera cam;
 	private Transform anchor;
 	void Start()
 	{
 		rb = GetComponent<Rigidbody>();
 		CapCollider = GetComponent<CapsuleCollider>();
+		cam = GameObject.Find("Main Camera").GetComponent<Camera>();
 	}
 
-	void Update()
+	void FixedUpdate()
 	{
 		if (flying)
 		{
-			rb.AddRelativeForce(Vector3.up * speed * Time.deltaTime, ForceMode.Impulse);
+			rb.AddRelativeForce(-Vector3.forward * speed * Time.deltaTime, ForceMode.Impulse);
 		}
 		if (this.anchor != null)
 		{
@@ -54,7 +56,7 @@ public class Projectile : MonoBehaviour {
 		{
 			//if (enemyScript.health > 0)
 		    //{
-				enemyRigid.AddForce(transform.up * enemyScript.burstForce, ForceMode.Impulse);
+				enemyRigid.AddForce(-transform.forward * enemyScript.burstForce, ForceMode.Impulse);
 				GameObject anchor = new GameObject("Javalin_Anchor");
 				anchor.transform.position = this.transform.position;
 				anchor.transform.rotation = this.transform.rotation;

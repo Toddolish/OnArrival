@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour
 		agent = this.GetComponent<NavMeshAgent>();
 		wanderScript = GetComponent<Wander>();
 		target = GameObject.Find("Player").GetComponent<Transform>();
-		weaponScript = GameObject.Find("Weapon").GetComponent<Weapon>();
+		//weaponScript = GameObject.Find("Weapon").GetComponent<Weapon>();
 	}
 	public void Update()
 	{

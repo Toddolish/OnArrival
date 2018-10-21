@@ -28,10 +28,6 @@ public class PlayerMovment : MonoBehaviour
 	public float distToGround;
 	bool down;
 
-	[Header("Dash")]
-	public float dashTimer;
-	public bool dashReady;
-	
 	// Collect ammo 
 	bool pickup = false;
 	float pickupTimer;
@@ -39,9 +35,8 @@ public class PlayerMovment : MonoBehaviour
 
 	void Start()
 	{
-		dashReady = true;
-		weapon = GameObject.Find("Weapon").GetComponent<Weapon>();
-		aimScript = GameObject.Find("Weapon").GetComponent<AimDownSight>();
+		weapon = GameObject.Find("Extraction_Rifle").GetComponent<Weapon>();
+		aimScript = GameObject.Find("Extraction_Rifle").GetComponent<AimDownSight>();
 		rigid = GetComponent<Rigidbody>();
 		anim = GetComponent<Animator>();
 		playerStats = GetComponent<PlayerStats>();
@@ -56,8 +51,7 @@ public class PlayerMovment : MonoBehaviour
 	private void Update()
 	{
 		#region Methods
-		Dash();
-		Aiming();
+		//Aiming();
 		Sprinting();
 		Crouch();
 		#endregion
@@ -114,50 +108,12 @@ public class PlayerMovment : MonoBehaviour
 				}
 			}
 		}
-		if (collision.gameObject.tag == "OrbPlant")
-		{
-			collectText.enabled = true;
-			if (Input.GetKeyDown(KeyCode.E))
-			{
-				if (!pickup)
-				{
-					Target orbPlant;
-					orbPlant = collision.transform.GetComponent<Target>();
-					weapon.AddOrbAmmoCapsule();
-					Destroy(orbPlant.gameObject);
-					pickup = true;
-				}
-			}
-		}
 	}
 	private void OnTriggerExit(Collider collision)
 	{
 		if (collision.gameObject.tag == "spikePlant")
 		{
 			collectText.enabled = false;
-		}
-	}
-	public void Dash()
-	{
-		if (dashReady)
-		{
-			if (Input.GetKeyDown(KeyCode.LeftAlt) && playerStats.curEnergy > 45) // Dashing if curEnergy is greater then 45
-			{
-				dashReady = false;
-				playerStats.curEnergy -= 50f; // Decreasing curEnergy by 50
-			}
-		}
-		if (!dashReady)
-		{
-			dashTimer += Time.deltaTime;
-			float inputH = Input.GetAxis("Horizontal") * Time.deltaTime;
-			float inputV = Input.GetAxis("Vertical") * Time.deltaTime;
-			if (dashTimer > 0.2f)
-			{
-				rigid.AddRelativeForce(Vector3.forward * DashMoveSpeed , ForceMode.Impulse);
-				dashReady = true;
-				dashTimer = 0;
-			}
 		}
 	}
 	public void Crouch()
@@ -201,11 +157,11 @@ public class PlayerMovment : MonoBehaviour
 	{
 		if (aimScript.aiming)
 		{
-			anim.SetBool("aiming", true);
+			//anim.SetBool("aiming", true);
 		}
 		else
 		{
-			anim.SetBool("aiming", false);
+			//anim.SetBool("aiming", false);
 		}
 	}
 	bool IsGrounded()
