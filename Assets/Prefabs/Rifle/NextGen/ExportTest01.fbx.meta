@@ -1,0 +1,195 @@
+fileFormatVersion: 2
+guid: 362bb21930231f147aa2e3c608dc6d6e
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Arm_Left
+    100002: Arm_Right
+    100004: Elbow_L
+    100006: Elbow_R
+    100008: //RootNode
+    100010: Extraction_Rifle_v02:Magazine1
+    100012: Health_Bar
+    100014: Health_Bar_Glass
+    100016: Middle_L
+    100018: Middle_Mid_L
+    100020: Middle_Mid_R
+    100022: Middle_R
+    100024: Middle_Tip_L
+    100026: Middle_Tip_R
+    100028: Pinky_L
+    100030: Pinky_Mid_L
+    100032: Pinky_Mid_R
+    100034: Pinky_R
+    100036: Pinky_Tip_L
+    100038: Pinky_Tip_R
+    100040: Pointer_L
+    100042: Pointer_Mid_L
+    100044: Pointer_Mid_R
+    100046: Pointer_R
+    100048: Pointer_Tip_L
+    100050: Pointer_Tip_R
+    100052: Ring_L
+    100054: Ring_Mid_L
+    100056: Ring_Mid_R
+    100058: Ring_R
+    100060: Ring_Tip_L
+    100062: Ring_Tip_R
+    100064: Root
+    100066: Shoulder_L
+    100068: Shoulder_R
+    100070: Thumb_L
+    100072: Thumb_Mid_L
+    100074: Thumb_Mid_R
+    100076: Thumb_R
+    100078: Thumb_Tip_L
+    100080: Thumb_Tip_R
+    100082: Wrist_L
+    100084: Wrist_R
+    400000: Arm_Left
+    400002: Arm_Right
+    400004: Elbow_L
+    400006: Elbow_R
+    400008: //RootNode
+    400010: Extraction_Rifle_v02:Magazine1
+    400012: Health_Bar
+    400014: Health_Bar_Glass
+    400016: Middle_L
+    400018: Middle_Mid_L
+    400020: Middle_Mid_R
+    400022: Middle_R
+    400024: Middle_Tip_L
+    400026: Middle_Tip_R
+    400028: Pinky_L
+    400030: Pinky_Mid_L
+    400032: Pinky_Mid_R
+    400034: Pinky_R
+    400036: Pinky_Tip_L
+    400038: Pinky_Tip_R
+    400040: Pointer_L
+    400042: Pointer_Mid_L
+    400044: Pointer_Mid_R
+    400046: Pointer_R
+    400048: Pointer_Tip_L
+    400050: Pointer_Tip_R
+    400052: Ring_L
+    400054: Ring_Mid_L
+    400056: Ring_Mid_R
+    400058: Ring_R
+    400060: Ring_Tip_L
+    400062: Ring_Tip_R
+    400064: Root
+    400066: Shoulder_L
+    400068: Shoulder_R
+    400070: Thumb_L
+    400072: Thumb_Mid_L
+    400074: Thumb_Mid_R
+    400076: Thumb_R
+    400078: Thumb_Tip_L
+    400080: Thumb_Tip_R
+    400082: Wrist_L
+    400084: Wrist_R
+    2100000: Extraction_Rifle_v02_lambert4
+    2100002: Extraction_Rifle_v02_lambert2
+    2100004: Extraction_Rifle_v02_lambert3
+    2100006: Health_Extract
+    2300000: Arm_Left
+    2300002: Arm_Right
+    2300004: Extraction_Rifle_v02:Magazine1
+    2300006: Health_Bar
+    2300008: Health_Bar_Glass
+    3300000: Arm_Left
+    3300002: Arm_Right
+    3300004: Extraction_Rifle_v02:Magazine1
+    3300006: Health_Bar
+    3300008: Health_Bar_Glass
+    4300000: Extraction_Rifle_v02:Magazine1
+    4300002: Arm_Right
+    4300004: Arm_Left
+    4300006: Health_Bar
+    4300008: Health_Bar_Glass
+    7400000: Take 001
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 6
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.049999997
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

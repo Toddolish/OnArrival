@@ -40,6 +40,9 @@ public class Weapon : MonoBehaviour
 	public Text javTextCartridgeCounter;
 	public Text normalTextCartridgeCounter;
 	public Text orbTextCartridgeCounter;
+
+	// Hologram Image bar on the weapon Canvas to display to cur ammo;
+	public Image ammoBarImage;
 	#endregion
 
 	void Start()
@@ -47,6 +50,8 @@ public class Weapon : MonoBehaviour
 		currentJavAmmo = maxJavAmmo;
 		javAmmoBar = GameObject.Find("LiquidParent").GetComponent<Transform>();
 		canisterHoldingPoint = GameObject.Find("CanisterHolderPoint").GetComponent<Transform>();
+		ammoBarImage = GameObject.Find("AmmoBar").GetComponent<Image>();
+		
 		if (enemyScript != null)
 		{
 			enemyScript = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
@@ -56,6 +61,7 @@ public class Weapon : MonoBehaviour
 
 	void Update()
 	{
+		ammoBarImage.fillAmount = currentJavAmmo / 30;
 		javTextCartridgeCounter.text = javAmmoCartridge.ToString();
 		Reload();
 		javAmmoBar.transform.localScale = new Vector3(javX, javAmmoY, javZ);
@@ -86,6 +92,7 @@ public class Weapon : MonoBehaviour
 				Transform canisterAmmo = GameObject.Find("CanisterHolder").GetComponent<Transform>();
 				// Find canisterHolder Rigidbody and set kinematic to false
 				canisterAmmo.GetComponent<Rigidbody>().isKinematic = false;
+				//canisterAmmo.GetComponent<Rigidbody>().AddForce
 				// Find Liquid and change the name to "Empty"
 				canisterAmmo.name = "Used Canister";
 				canisterAmmo.transform.GetChild(1).GetComponent<Transform>().name = "Empty";

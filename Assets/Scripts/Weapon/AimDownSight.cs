@@ -16,9 +16,9 @@ public class AimDownSight : MonoBehaviour
 			transform.localPosition = Vector3.Slerp(transform.localPosition, aimDownSight, aimSpeed * Time.deltaTime);
 			aiming = true;
 		}
-		if (Input.GetMouseButtonUp(1)) // Set weapon to Hip fire
+		else 
 		{
-			transform.localPosition = hipFire;
+			transform.localPosition = Vector3.Slerp(transform.localPosition, hipFire, aimSpeed * Time.deltaTime); 
 			aiming = false;
 		}
 	}

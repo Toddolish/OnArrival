@@ -10,6 +10,10 @@ public class PlayerStats : MonoBehaviour
 	public float curHealth;
 	public float maxHealth = 100;
 	public Image healthBar;
+	// Get the Helath bar Object
+	public GameObject healthBar_Object;
+	// Get the scale x,y and z and set them all the the correct size
+	float heathBarScaleY = 0.3519601f;
 
 	[Header("Energy")]
 	public float curEnergy;
@@ -40,6 +44,8 @@ public class PlayerStats : MonoBehaviour
 			curHealth = maxHealth;
 		}
 		healthBar.fillAmount = curHealth / 100;
+		healthBar_Object.transform.localScale = new Vector3(0.125382f, heathBarScaleY, 0.125382f);
+		heathBarScaleY = curHealth / 283;
 		#endregion
 
 		#region Energy
