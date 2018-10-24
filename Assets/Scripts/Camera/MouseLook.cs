@@ -25,9 +25,11 @@ public class MouseLook : MonoBehaviour
     #region Start
     void Start()
     {
-		Cursor.lockState = CursorLockMode.Confined;
-		//if our game object has a rigidbody attached to it
-		if (this.GetComponent<Rigidbody>())
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Confined;
+
+        //if our game object has a rigidbody attached to it
+        if (this.GetComponent<Rigidbody>())
         {
             //set the rigidbodys freezRotaion to true
             this.GetComponent<Rigidbody>().freezeRotation = true;

@@ -3,6 +3,28 @@ guid: 6cd3282127249224483ddfaf5d7a3cfb
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
+    100000: Canister
+    100002: //RootNode
+    100004: Gun
+    100006: sights
+    400000: Canister
+    400002: //RootNode
+    400004: Gun
+    400006: sights
+    2100000: lambert4
+    2100002: lambert2
+    2100004: blinn1
+    2100006: lambert3
+    2300000: Canister
+    2300002: Gun
+    2300004: sights
+    3300000: Canister
+    3300002: Gun
+    3300004: sights
+    4300000: Canister
+    4300002: sights
+    4300004: Gun
+    9500000: //RootNode
     2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
@@ -56,7 +78,7 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
     previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

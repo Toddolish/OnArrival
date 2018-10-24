@@ -14,6 +14,10 @@ public class PlayerStats : MonoBehaviour
 	public GameObject healthBar_Object;
 	// Get the scale x,y and z and set them all the the correct size
 	float heathBarScaleY = 0.3519601f;
+    // Materials
+    public MeshRenderer healthMesh;
+    public Material greenHealth;
+    public Material redHealth;
 
 	[Header("Energy")]
 	public float curEnergy;
@@ -25,16 +29,17 @@ public class PlayerStats : MonoBehaviour
 
 	void Start()
 	{
-		curHealth = maxHealth;
+        curHealth = maxHealth;
 		curEnergy = maxEnergy;
-		healthBar = GameObject.Find("HealthBar").GetComponent<Image>();
 		energyBar = GameObject.Find("EnergyBar").GetComponent<Image>();
 	}
 
 	void Update()
 	{
-		#region Health
-		if (curHealth <= 0)
+        #region Health
+        healthBar_Object.transform.localScale = new Vector3(0.125382f, heathBarScaleY, 0.125382f);
+        heathBarScaleY = curHealth / 283;
+        if (curHealth <= 0)
 		{
 			GameOver();
 			curHealth = 0;
@@ -43,9 +48,14 @@ public class PlayerStats : MonoBehaviour
 		{
 			curHealth = maxHealth;
 		}
-		healthBar.fillAmount = curHealth / 100;
-		healthBar_Object.transform.localScale = new Vector3(0.125382f, heathBarScaleY, 0.125382f);
-		heathBarScaleY = curHealth / 283;
+        if (curHealth <= 50)
+        {
+            healthMesh.material = redHealth;
+        }
+        else if (curHealth > 51)
+        {
+            healthMesh.material = greenHealth;
+        }
 		#endregion
 
 		#region Energy

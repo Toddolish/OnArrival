@@ -5,37 +5,50 @@ using UnityEngine.UI;
 
 public class PlayerMovment : MonoBehaviour
 {
-	[Header(" Base Variables")]
-	public LayerMask jumpableLayers;
-	public float startMoveSpeed;
-	public float moveSpeed; // The normal movement speed;
-	public float crouchMoveSpeed; // When Player is Crouched
-	public float sprintSpeed; // The max speed player can sprint
-	public bool crouch;
-	public bool sprint;
-	public float staminaDecreaseRate = 1f;
-	private Vector3 moveDirection;
-	Animator anim;
-	Rigidbody rigid;
-	public Text collectText;
-	public AimDownSight aimScript;
-	Weapon weapon;
-	PlayerStats playerStats;
+    #region Base Variables
+    [Header(" Base Variables")]
+    public LayerMask jumpableLayers;
+    public float startMoveSpeed;
+    public float moveSpeed; // The normal movement speed;
+    public float crouchMoveSpeed; // When Player is Crouched
+    public float sprintSpeed; // The max speed player can sprint
+    public bool crouch;
+    public bool sprint;
+    public float staminaDecreaseRate = 1f;
+    private Vector3 moveDirection;
+    Animator anim;
+    Rigidbody rigid;
+    public Text collectText;
+    public AimDownSight aimScript;
+    Weapon weapon;
+    PlayerStats playerStats;
+    #endregion
+    #region Jump Variables
+    [Header("Jump")]
+    public float jumpForce = 10f;
+    public float downForce = 20;
+    public float distToGround;
+    bool down;
+    #endregion
+    #region Ammo Collection 
+    // Collect ammo 
+    bool pickup = false;
+    float pickupTimer;
+    #endregion
+    #region Pulse Skill
+    [Header("Pulse Skill")]
+    // pulseReady will be a special skill and when its true u can use it then it will go to false
+    public bool pulseReady;
+    // when timer is over pulseSkill will be ready to use again
+    float pulseTimer;
+    float pulseCooldownTime = 3;
+    #endregion
 
-	[Header("Jump")]
-	public float jumpForce = 10f;
-	public float downForce = 20;
-	public float distToGround;
-	bool down;
 
-	// Collect ammo 
-	bool pickup = false;
-	float pickupTimer;
-	public float DashMoveSpeed = 100;
-
-	void Start()
+    void Start()
 	{
-		weapon = GameObject.Find("Extraction_Rifle").GetComponent<Weapon>();
+        pulseReady = true;
+        weapon = GameObject.Find("Extraction_Rifle").GetComponent<Weapon>();
 		aimScript = GameObject.Find("Extraction_Rifle").GetComponent<AimDownSight>();
 		rigid = GetComponent<Rigidbody>();
 		anim = GetComponent<Animator>();
@@ -50,9 +63,10 @@ public class PlayerMovment : MonoBehaviour
 	}
 	private void Update()
 	{
-		#region Methods
-		//Aiming();
-		Sprinting();
+        #region Methods
+        //Aiming();
+        PulseCharge();
+        Sprinting();
 		Crouch();
 		#endregion
 		if (pickup)
@@ -136,7 +150,29 @@ public class PlayerMovment : MonoBehaviour
 			moveSpeed = startMoveSpeed;
 		}
 	}
-	public void Sprinting()
+    public void PulseCharge()
+    {
+        // If pulseReady is true it can be used with middle mouse button
+        if (pulseReady && Input.GetKeyDown(KeyCode.Mouse2))
+        {
+            // Shoot projectiles like a shotgun and knockback enemies
+            Debug.Log(" use pulse skill");
+            // Once used timer will start a countdown and pulseReady will be false as it is no longer ready
+            pulseReady = false;
+        }
+        if (!pulseReady)
+        {
+            pulseTimer += Time.deltaTime;
+            if (pulseTimer >= pulseCooldownTime)
+            {
+                Debug.Log("your pulse skill is ready to be used");
+                pulseReady = true;
+                pulseTimer = 0;
+            }
+        }
+
+    }
+    public void Sprinting()
 	{
 			if (Input.GetKey(KeyCode.LeftShift) && playerStats.curEnergy > 0 && !crouch) // Start sprinting
 			{

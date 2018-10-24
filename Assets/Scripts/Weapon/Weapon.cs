@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class Weapon : MonoBehaviour
 {
 	#region Variables
-	[Header("Weapon")]
+	[Header("Weapon")] 
 	public float damage = 10f;
 	public float range = 100f;
 	public float impactForce = 100f;
@@ -105,7 +105,9 @@ public class Weapon : MonoBehaviour
 	}
 	void shootJav()
 	{
-		muzzelFlash.Play();
+   
+
+        muzzelFlash.Play();
 		currentJavAmmo--;
 		RaycastHit hit;
 		if (Physics.Raycast(javSpawnPoint.transform.position, fpsCam.transform.forward, out hit, range, layersToHit))
@@ -121,7 +123,7 @@ public class Weapon : MonoBehaviour
 			{
 				enemy.TakeDamage(damage);
 			}
-			GameObject javalinPrefab = Instantiate(Javalin, javSpawnPoint.position, javSpawnPoint.rotation);
+			GameObject javalinPrefab = Instantiate(Javalin, javSpawnPoint.position, fpsCam.transform.rotation);
 		}
 	}
 	public void AddSpikeAmmoCapsule()

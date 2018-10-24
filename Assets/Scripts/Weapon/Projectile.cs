@@ -21,7 +21,7 @@ public class Projectile : MonoBehaviour {
 	{
 		if (flying)
 		{
-			rb.AddRelativeForce(-Vector3.forward * speed * Time.deltaTime, ForceMode.Impulse);
+			rb.AddRelativeForce(Vector3.forward * speed * Time.deltaTime, ForceMode.Impulse);
 		}
 		if (this.anchor != null)
 		{
@@ -56,7 +56,7 @@ public class Projectile : MonoBehaviour {
 		{
 			//if (enemyScript.health > 0)
 		    //{
-				enemyRigid.AddForce(-transform.forward * enemyScript.burstForce, ForceMode.Impulse);
+				enemyRigid.AddForce(transform.forward * enemyScript.burstForce, ForceMode.Impulse);
 				GameObject anchor = new GameObject("Javalin_Anchor");
 				anchor.transform.position = this.transform.position;
 				anchor.transform.rotation = this.transform.rotation;
@@ -68,9 +68,9 @@ public class Projectile : MonoBehaviour {
 				flying = false;
 				speed = 0;
 			//}
-		}/*
+		}
 		// Parent the enemy to the projectile 
-		if(collision.gameObject.tag == "Enemy")
+		/*if(collision.gameObject.tag == "Enemy")
 		{
 			if (enemyScript.health <= 0)
 			{
