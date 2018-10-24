@@ -1,0 +1,216 @@
+fileFormatVersion: 2
+guid: 9e8b19294b3627e4b88421b31e8a1dbc
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: CurvedTree_Grasslands
+    100004: CurvedTree_Magenta
+    100006: CurvedTree_Sky
+    100008: CurvedVineTree_Grasslands
+    100010: LargePineTree_Grasslands
+    100012: LargePineTree_Magenta
+    100014: LargePineTree_Sky
+    100016: LargeTree_Grasslands
+    100018: Mushroom
+    100020: PineTree_Grasslands
+    100022: PineTree_Magenta
+    100024: PineTree_Sky
+    100026: RockLarge
+    100028: RockMedium
+    100030: RockPile
+    100032: RockSmall
+    100034: Tree_Grasslands
+    100036: Tree_Magenta
+    100038: Tree_Sky
+    100040: Vines
+    100042: Vines1
+    100044: Vines2
+    100046: VineTree_Grasslands
+    400000: //RootNode
+    400002: CurvedTree_Grasslands
+    400004: CurvedTree_Magenta
+    400006: CurvedTree_Sky
+    400008: CurvedVineTree_Grasslands
+    400010: LargePineTree_Grasslands
+    400012: LargePineTree_Magenta
+    400014: LargePineTree_Sky
+    400016: LargeTree_Grasslands
+    400018: Mushroom
+    400020: PineTree_Grasslands
+    400022: PineTree_Magenta
+    400024: PineTree_Sky
+    400026: RockLarge
+    400028: RockMedium
+    400030: RockPile
+    400032: RockSmall
+    400034: Tree_Grasslands
+    400036: Tree_Magenta
+    400038: Tree_Sky
+    400040: Vines
+    400042: Vines1
+    400044: Vines2
+    400046: VineTree_Grasslands
+    2100000: Leaves_texture01
+    2100002: Bark_texture03
+    2100004: Leaves_Texture02
+    2100006: Bark_texture01
+    2100008: Leaves_Texture03
+    2100010: Bark_Texture03
+    2100012: Rock_Texture1
+    2100014: Mushroom_Root_Texture
+    2100016: Mushroom_Cap_Texture
+    2100018: Mushroom_Glow_Texture
+    2300000: CurvedTree_Grasslands
+    2300002: CurvedTree_Magenta
+    2300004: CurvedTree_Sky
+    2300006: CurvedVineTree_Grasslands
+    2300008: LargePineTree_Grasslands
+    2300010: LargePineTree_Magenta
+    2300012: LargePineTree_Sky
+    2300014: LargeTree_Grasslands
+    2300016: Mushroom
+    2300018: PineTree_Grasslands
+    2300020: PineTree_Magenta
+    2300022: PineTree_Sky
+    2300024: RockLarge
+    2300026: RockMedium
+    2300028: RockPile
+    2300030: RockSmall
+    2300032: Tree_Grasslands
+    2300034: Tree_Magenta
+    2300036: Tree_Sky
+    2300038: Vines
+    2300040: Vines1
+    2300042: Vines2
+    2300044: VineTree_Grasslands
+    3300000: CurvedTree_Grasslands
+    3300002: CurvedTree_Magenta
+    3300004: CurvedTree_Sky
+    3300006: CurvedVineTree_Grasslands
+    3300008: LargePineTree_Grasslands
+    3300010: LargePineTree_Magenta
+    3300012: LargePineTree_Sky
+    3300014: LargeTree_Grasslands
+    3300016: Mushroom
+    3300018: PineTree_Grasslands
+    3300020: PineTree_Magenta
+    3300022: PineTree_Sky
+    3300024: RockLarge
+    3300026: RockMedium
+    3300028: RockPile
+    3300030: RockSmall
+    3300032: Tree_Grasslands
+    3300034: Tree_Magenta
+    3300036: Tree_Sky
+    3300038: Vines
+    3300040: Vines1
+    3300042: Vines2
+    3300044: VineTree_Grasslands
+    4300000: PineTree_Grasslands
+    4300002: PineTree_Sky
+    4300004: PineTree_Magenta
+    4300006: CurvedTree_Grasslands
+    4300008: CurvedTree_Sky
+    4300010: CurvedTree_Magenta
+    4300012: CurvedVineTree_Grasslands
+    4300014: Tree_Grasslands
+    4300016: Tree_Sky
+    4300018: Tree_Magenta
+    4300020: VineTree_Grasslands
+    4300022: RockLarge
+    4300024: RockMedium
+    4300026: RockSmall
+    4300028: RockPile
+    4300030: Mushroom
+    4300032: LargePineTree_Magenta
+    4300034: LargePineTree_Sky
+    4300036: LargePineTree_Grasslands
+    4300038: LargeTree_Grasslands
+    4300040: Vines
+    4300042: Vines1
+    4300044: Vines2
+    2186277476908879412: ImportLogs
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 30
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
