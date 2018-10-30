@@ -21,9 +21,10 @@ GameObject:
   - component: {fileID: 4921623247479608}
   - component: {fileID: 33286967854433786}
   - component: {fileID: 23586367087597548}
-  m_Layer: 0
+  - component: {fileID: 64560356003950628}
+  m_Layer: 11
   m_Name: PineTree_Magenta
-  m_TagString: Untagged
+  m_TagString: Trees
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,4 +84,18 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1944885949068062}
+  m_Mesh: {fileID: 4300004, guid: 9e8b19294b3627e4b88421b31e8a1dbc, type: 3}
+--- !u!64 &64560356003950628
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1944885949068062}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300004, guid: 9e8b19294b3627e4b88421b31e8a1dbc, type: 3}

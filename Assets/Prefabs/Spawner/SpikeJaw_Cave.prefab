@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4641882525806382}
-  - component: {fileID: 114256553547376498}
+  - component: {fileID: 114489755509040404}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 33639211683658354}
   - component: {fileID: 114202427921416928}
   - component: {fileID: 64261025843029618}
-  - component: {fileID: 208990697574784774}
+  - component: {fileID: 208607115235731616}
   m_Layer: 0
   m_Name: SpikeJaw_Cave
   m_TagString: Trees
@@ -54,7 +54,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1140921918248052}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.92, y: 0.372, z: 0}
+  m_LocalPosition: {x: -0.92, y: 0.75, z: -6.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4795584243614274}
@@ -66,14 +66,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1543548957161238}
-  m_LocalRotation: {x: -0, y: 0.20239411, z: -0, w: 0.9793042}
-  m_LocalPosition: {x: 7.17, y: 0.34, z: 41.6}
+  m_LocalRotation: {x: -0, y: 0.2972815, z: -0, w: 0.95478994}
+  m_LocalPosition: {x: -14.48, y: 0.35, z: 79.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4641882525806382}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 23.354002, z: 0}
+  m_LocalEulerAnglesHint: {x: -5.657, y: 34.589, z: 2.0670002}
 --- !u!23 &23506498917206426
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -122,7 +122,7 @@ MeshCollider:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1543548957161238}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 9aef6b9a53825694ea870d3d03a05a7a, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -7121,7 +7121,7 @@ MonoBehaviour:
   m_selectedFaces: 
   m_SelectedEdges: []
   m_selectedTriangles: 
---- !u!114 &114256553547376498
+--- !u!114 &114489755509040404
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7129,12 +7129,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 1140921918248052}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 654a23dcca8f31c44b9aef854c2f2b29, type: 3}
+  m_Script: {fileID: 11500000, guid: e2dec50212a5eb246bed3c4c86d1ab9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemy: {fileID: 1709745065917372, guid: b2321b63c1a93f349b25143d2f69766f, type: 2}
-  countDown: 0
---- !u!208 &208990697574784774
+  waveText: {fileID: 0}
+  waveCount: 0
+  waves:
+  - name: 
+    enemy: {fileID: 4756675263830478, guid: 0a5b82c4a2328d94d867ba4552f9b926, type: 2}
+    count: 2
+    rate: 0.1
+    enemy2: {fileID: 4756675263830478, guid: 0a5b82c4a2328d94d867ba4552f9b926, type: 2}
+    count2: 3
+    enemy3: {fileID: 4756675263830478, guid: 0a5b82c4a2328d94d867ba4552f9b926, type: 2}
+    count3: 4
+  - name: 
+    enemy: {fileID: 0}
+    count: 0
+    rate: 0
+    enemy2: {fileID: 0}
+    count2: 0
+    enemy3: {fileID: 0}
+    count3: 0
+  - name: 
+    enemy: {fileID: 0}
+    count: 0
+    rate: 0
+    enemy2: {fileID: 0}
+    count2: 0
+    enemy3: {fileID: 0}
+    count3: 0
+  spawnPoints:
+  - {fileID: 4641882525806382}
+  timeBetweenWaves: 5
+--- !u!208 &208607115235731616
 NavMeshObstacle:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7142,10 +7170,10 @@ NavMeshObstacle:
   m_GameObject: {fileID: 1543548957161238}
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 1.725, y: 1.27, z: 0.3}
-  m_MoveThreshold: 0.03
+  m_Shape: 0
+  m_Extents: {x: 1.871, y: 1.8320001, z: 1.337}
+  m_MoveThreshold: 0.1
   m_Carve: 0
   m_CarveOnlyStationary: 1
-  m_Center: {x: -0.36, y: 0.22, z: 0.43}
-  m_TimeToStationary: 1.73
+  m_Center: {x: -0.87100005, y: 0.69100004, z: 0.013}
+  m_TimeToStationary: 0.5

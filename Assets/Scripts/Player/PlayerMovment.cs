@@ -5,69 +5,88 @@ using UnityEngine.UI;
 
 public class PlayerMovment : MonoBehaviour
 {
-    #region Base Variables
-    [Header(" Base Variables")]
-    public LayerMask jumpableLayers;
-    public float startMoveSpeed;
-    public float moveSpeed; // The normal movement speed;
-    public float crouchMoveSpeed; // When Player is Crouched
-    public float sprintSpeed; // The max speed player can sprint
-    public bool crouch;
-    public bool sprint;
-    public float staminaDecreaseRate = 1f;
-    private Vector3 moveDirection;
-    Animator anim;
-    Rigidbody rigid;
-    public Text collectText;
-    public AimDownSight aimScript;
-    Weapon weapon;
-    PlayerStats playerStats;
-    #endregion
-    #region Jump Variables
-    [Header("Jump")]
-    public float jumpForce = 10f;
-    public float downForce = 20;
-    public float distToGround;
-    bool down;
-    #endregion
-    #region Ammo Collection 
-    // Collect ammo 
-    bool pickup = false;
-    float pickupTimer;
-    #endregion
-    #region Pulse Skill
-    [Header("Pulse Skill")]
-    // pulseReady will be a special skill and when its true u can use it then it will go to false
-    public bool pulseReady;
-    // when timer is over pulseSkill will be ready to use again
-    float pulseTimer;
-    float pulseCooldownTime = 3;
-    #endregion
-
-
-    void Start()
+	#region Base Variables
+	[Header(" Base Variables")]
+	private CharacterController controller;
+	public LayerMask jumpableLayers;
+	public float startMoveSpeed;
+	public float moveSpeed; // The normal movement speed;
+	public float crouchMoveSpeed; // When Player is Crouched
+	public float sprintSpeed; // The max speed player can sprint
+	public bool crouch;
+	public bool sprint;
+	public float staminaDecreaseRate = 1f;
+	private Vector3 moveDirection;
+	Animator anim; // Used for crouch only
+	public Animator animMain;
+	public Text collectText;
+	public AimDownSight aimScript;
+	Weapon weapon;
+	PlayerStats playerStats;
+	public LayerMask spikePlant;
+	//sprint 
+	float cannotSprintTimer;
+	#endregion
+	#region Jump Variables
+	[Header("Jump")]
+	bool isJumping;
+	[SerializeField] private AnimationCurve jumpFallOff;
+	[SerializeField] private float jumpMultiplier;
+	bool down;
+	#endregion
+	#region Ammo Collection 
+	// Collect ammo 
+	public bool pickup = false;
+	float pickupTimer;
+	#endregion
+	#region Pulse Skill
+	[Header("Pulse Skill")]
+	// pulseReady will be a special skill and when its true u can use it then it will go to false
+	public bool pulseReady;
+	// when timer is over pulseSkill will be ready to use again
+	float pulseTimer;
+	float pulseCooldownTime = 0.5f;
+	public float range = 100f;
+	public float radius;
+	Ray shootRay;
+	RaycastHit shootHit;
+	int shootableMask;
+	Enemy enemyScript;
+	#endregion
+	//Beacon
+	public Text beaconText;
+	void Start()
 	{
-        pulseReady = true;
-        weapon = GameObject.Find("Extraction_Rifle").GetComponent<Weapon>();
-		aimScript = GameObject.Find("Extraction_Rifle").GetComponent<AimDownSight>();
-		rigid = GetComponent<Rigidbody>();
+		pulseReady = true;
+		weapon = GameObject.Find("Extraction_Rifle").GetComponent<Weapon>();
+		aimScript = GameObject.Find("Player_Animations_with_rifle").GetComponent<AimDownSight>();
+		controller = GetComponent<CharacterController>();
 		anim = GetComponent<Animator>();
 		playerStats = GetComponent<PlayerStats>();
 		Cursor.visible = false;
 		Cursor.lockState = CursorLockMode.Confined;
 	}
-	private void OnDrawGizmos()
-	{
-		Vector3 direction = transform.TransformDirection(Vector3.down) * distToGround;
-		Gizmos.DrawRay(transform.position, direction);
-	}
 	private void Update()
 	{
-        #region Methods
-        //Aiming();
-        PulseCharge();
-        Sprinting();
+		Extract();
+		Jump();
+		// When player stop sprinting
+		// Stop walk animation
+		if (aimScript.aiming)
+		{
+			animMain.SetBool("Sprinting", false);
+			animMain.SetFloat("Walking", 0);
+			moveSpeed = startMoveSpeed;
+			sprint = false;
+		}
+		else
+		{
+			// I dont know!
+		}
+		#region Methods
 		Crouch();
+		PulseCharge();
+		Sprinting();
 		#endregion
 		if (pickup)
 		{
@@ -80,54 +99,90 @@ public class PlayerMovment : MonoBehaviour
 			}
 		}
 	}
-	private void FixedUpdate()
-	{
-		rigid.AddForce(Vector3.down * downForce * Time.deltaTime, ForceMode.VelocityChange);
-		Jump();
-		Movement();
-	}
 	private void LateUpdate()
 	{
-		
+		Movement();
 	}
 	public void Jump()
 	{
-		if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+		if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
 		{
-			Vector3 jumpVelocity = new Vector3(0, jumpForce, 0);
-			rigid.velocity = rigid.velocity + jumpVelocity;
+			// When player jumps disable sprint and walk animations
+			animMain.SetBool("Jumping", true);
+			isJumping = true;
+			StartCoroutine(JumpEvent());
+		}
+		if (controller.isGrounded)
+		{
+			animMain.SetBool("Jumping", false);
 		}
 	}
 	public void Movement()
 	{
-		float inputH = Input.GetAxis("Horizontal") * Time.deltaTime;
-		float inputV = Input.GetAxis("Vertical") * Time.deltaTime;
-		rigid.AddRelativeForce(new Vector3(inputH * moveSpeed, 0, inputV * moveSpeed), ForceMode.Impulse);
-		anim.SetFloat("moveSpeed", inputV);
+		float horizInput = Input.GetAxis("Horizontal") * moveSpeed;
+		float vertInput = Input.GetAxis("Vertical") * moveSpeed;
+
+		Vector3 forwardMovement = transform.forward * vertInput;
+		Vector3 rightMovement = transform.right * horizInput;
+
+		controller.SimpleMove(forwardMovement + rightMovement);
+
+		animMain.SetFloat("Walking", vertInput);
 	}
-	private void OnTriggerStay(Collider collision)
+	private void OnDrawGizmos()
 	{
-		if (collision.gameObject.tag == "spikePlant")
+		Gizmos.color = Color.cyan;
+		Gizmos.DrawWireSphere(transform.position, radius);
+	}
+	void Extract()
+	{
+		Debug.Log("use pulse skill");
+		RaycastHit[] hits;
+		hits = Physics.SphereCastAll(transform.position, radius, transform.forward, range, spikePlant);
+
+		if (hits.Length > 0)
 		{
-			collectText.enabled = true;
-			if (Input.GetKeyDown(KeyCode.E))
+			for (int i = 0; i < hits.Length; i++)
 			{
-				if (!pickup)
+				shootHit = hits[i];
+				SpikePlant spikePlant;
+				spikePlant = shootHit.transform.GetComponent<SpikePlant>();
+				if (spikePlant.curSap >= 2.4)
 				{
-					Target spikePlant;
-					spikePlant = collision.transform.GetComponent<Target>();
-					weapon.AddSpikeAmmoCapsule();
-					Destroy(spikePlant.gameObject);
-					pickup = true;
+					collectText.enabled = true;
+					if (Input.GetKeyDown(KeyCode.E) && spikePlant.timeForHarvest)
+					{
+						if (!pickup)
+						{
+							animMain.SetTrigger("Extract");
+						}
+					}
+				}
+
+				else
+				{
+					collectText.enabled = false;
 				}
 			}
 		}
-	}
-	private void OnTriggerExit(Collider collision)
-	{
-		if (collision.gameObject.tag == "spikePlant")
+		if (hits.Length <= 0)
 		{
-			collectText.enabled = false;
+			collectText.enabled = false; 
+		}
+	}
+	private void OnTriggerStay(Collider other)
+	{
+		if (other.gameObject.tag == "Beacon")
+		{
+			beaconText.enabled = true;
+			if (Input.GetKeyDown(KeyCode.E))
+			{
+				Destroy(other.gameObject);
+			}
+		}
+		else
+		{
+			beaconText.enabled = false;
 		}
 	}
 	public void Crouch()
@@ -150,58 +205,118 @@ public class PlayerMovment : MonoBehaviour
 			moveSpeed = startMoveSpeed;
 		}
 	}
-    public void PulseCharge()
-    {
-        // If pulseReady is true it can be used with middle mouse button
-        if (pulseReady && Input.GetKeyDown(KeyCode.Mouse2))
-        {
-            // Shoot projectiles like a shotgun and knockback enemies
-            Debug.Log(" use pulse skill");
-            // Once used timer will start a countdown and pulseReady will be false as it is no longer ready
-            pulseReady = false;
-        }
-        if (!pulseReady)
-        {
-            pulseTimer += Time.deltaTime;
-            if (pulseTimer >= pulseCooldownTime)
-            {
-                Debug.Log("your pulse skill is ready to be used");
-                pulseReady = true;
-                pulseTimer = 0;
-            }
-        }
+	public void PulseCharge()
+	{
+		// If pulseReady is true it can be used with middle mouse button
+		if (pulseReady && Input.GetKeyDown(KeyCode.Mouse2))
+		{
+			animMain.SetTrigger("Palm");
+		}
+		if (!pulseReady)
+		{
+			pulseTimer += Time.deltaTime;
+			if (pulseTimer >= pulseCooldownTime)
+			{
+				Debug.Log("your pulse skill is ready to be used");
+				pulseReady = true;
+				pulseTimer = 0;
+			}
+		}
+	}
+	public void Sprinting()
+	{
+		if (!aimScript.aiming)
+		{
+			if (playerStats.cannotSprint == false)
+			{
+				if (Input.GetKey(KeyCode.LeftShift) && playerStats.curEnergy > 0 && !crouch) // Start sprinting
+				{
+					animMain.SetBool("Sprinting", true);
+					playerStats.curEnergy -= staminaDecreaseRate * Time.deltaTime;
+					moveSpeed = sprintSpeed;
+					sprint = true;
+				}
+				else
+				{
+					animMain.SetBool("Sprinting", false);
+					playerStats.curEnergy += playerStats.energyRegenRate * Time.deltaTime;
+					moveSpeed = startMoveSpeed;
+					sprint = false;
+				}
+			}
+		}
+		if (playerStats.cannotSprint == true)
+		{
+			animMain.SetBool("Sprinting", false);
+			playerStats.curEnergy += playerStats.energyRegenRate * Time.deltaTime;
+			moveSpeed = startMoveSpeed;
+			sprint = false;
+			cannotSprintTimer += Time.deltaTime;
+			if (cannotSprintTimer > 5)
+			{
+				playerStats.cannotSprint = false;
+				cannotSprintTimer = 0;
+			}
+		}
+	}
+	public void ExtractPlant()
+	{
+		SpikePlant spikePlant;
+		if (spikePlant = shootHit.transform.GetComponent<SpikePlant>())
+		{
+			spikePlant.curSap = 0;
+			weapon.AddSpikeAmmoCapsule();
+			pickup = true;
+		}
+	}
+	public void PulseDischarge()
+	{
+		Debug.Log("use pulse skill");
+		RaycastHit[] hits;
+		hits = Physics.SphereCastAll(transform.position, radius, transform.forward, range);
 
-    }
-    public void Sprinting()
-	{
-			if (Input.GetKey(KeyCode.LeftShift) && playerStats.curEnergy > 0 && !crouch) // Start sprinting
-			{
-				playerStats.curEnergy -= staminaDecreaseRate * Time.deltaTime;
-				anim.SetBool("sprinting", true);
-				moveSpeed = sprintSpeed;
-				sprint = true;
-			}
-			else
-			{
-				playerStats.curEnergy += playerStats.energyRegenRate * Time.deltaTime;
-				anim.SetBool("sprinting", false);
-				moveSpeed = startMoveSpeed;
-				sprint = false;
-			}
-	}
-	public void Aiming()
-	{
-		if (aimScript.aiming)
+		if (hits.Length > 0)
 		{
-			//anim.SetBool("aiming", true);
+			for (int i = 0; i < hits.Length; i++)
+			{
+				Debug.Log("Searching for enemy script");
+				Debug.Log(hits[i].collider.name);
+				shootHit = hits[i];
+				if (enemyScript = shootHit.collider.gameObject.GetComponent<Enemy>())
+				{
+					if (weapon.javAmmoCartridge > 0)
+					{
+						weapon.javAmmoCartridge--;
+						enemyScript.Knockback();
+						enemyScript.health -= 50;
+					}
+					else
+					{
+						enemyScript.Knockback();
+						enemyScript.health -= 25;
+					}
+				}
+			}
 		}
-		else
-		{
-			//anim.SetBool("aiming", false);
-		}
+		// Shoot projectiles like a shotgun and knockback enemies
+		// Once used timer will start a countdown and pulseReady will be false as it is no longer ready
+		pulseReady = false;
 	}
-	bool IsGrounded()
+	private IEnumerator JumpEvent()
 	{
-	  return Physics.Raycast(transform.position, Vector3.down, distToGround, jumpableLayers);
+		//controller.slopeLimit = 90f;
+		float timeInAir = 0.0f;
+
+		do
+		{
+			float jumpForce = jumpFallOff.Evaluate(timeInAir);
+			controller.Move(Vector3.up * jumpForce * jumpMultiplier * Time.deltaTime);
+			timeInAir += Time.deltaTime;
+			yield return null;
+		}
+		while (!controller.isGrounded && controller.collisionFlags != CollisionFlags.Above);
+
+		controller.slopeLimit = 45f;
+		isJumping = false;
 	}
 }

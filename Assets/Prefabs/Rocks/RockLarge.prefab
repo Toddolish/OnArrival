@@ -21,9 +21,10 @@ GameObject:
   - component: {fileID: 4255117634638462}
   - component: {fileID: 33509873369036812}
   - component: {fileID: 23005309502661294}
-  m_Layer: 0
+  - component: {fileID: 64689338863712454}
+  m_Layer: 11
   m_Name: RockLarge
-  m_TagString: Untagged
+  m_TagString: Trees
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -82,4 +83,18 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1447022618711010}
+  m_Mesh: {fileID: 4300022, guid: 9e8b19294b3627e4b88421b31e8a1dbc, type: 3}
+--- !u!64 &64689338863712454
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1447022618711010}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300022, guid: 9e8b19294b3627e4b88421b31e8a1dbc, type: 3}

@@ -13,6 +13,10 @@ TagManager:
   - spike
   - Enemy
   - Rifle
+  - Crab
+  - SpikeJaw
+  - noHit
+  - Beacon
   layers:
   - Default
   - TransparentFX
@@ -26,8 +30,8 @@ TagManager:
   - weapon
   - Rifle
   - Tree
-  - 
-  - 
+  - Crab
+  - SpikePlant
   - 
   - 
   - 

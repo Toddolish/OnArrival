@@ -17,7 +17,6 @@ namespace SteeringBehaviours {
         }
         public virtual Vector3 GetForce()
         {
-            Vector3 force = new Vector3(0, 0, 0);
             return Vector3.zero;
         }
     }

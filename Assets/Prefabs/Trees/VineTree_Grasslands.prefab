@@ -21,9 +21,10 @@ GameObject:
   - component: {fileID: 4682693117782990}
   - component: {fileID: 33531094974027420}
   - component: {fileID: 23411674103278430}
-  m_Layer: 0
+  - component: {fileID: 64761161627356628}
+  m_Layer: 11
   m_Name: VineTree_Grasslands
-  m_TagString: Untagged
+  m_TagString: Trees
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,4 +84,18 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1737750850572828}
+  m_Mesh: {fileID: 4300020, guid: 9e8b19294b3627e4b88421b31e8a1dbc, type: 3}
+--- !u!64 &64761161627356628
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1737750850572828}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300020, guid: 9e8b19294b3627e4b88421b31e8a1dbc, type: 3}

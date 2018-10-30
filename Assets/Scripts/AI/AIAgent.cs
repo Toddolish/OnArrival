@@ -48,8 +48,11 @@ namespace SteeringBehaviours
             // Get an offset position as a new target
             Vector3 point = transform.position + velocity * Time.deltaTime;
 
-            // Apply velocity to transform
-            agent.SetDestination(point);
+			// Apply velocity to transform
+			if (agent != null)
+			{
+				agent.SetDestination(point);
+			}
         }
     }
 }

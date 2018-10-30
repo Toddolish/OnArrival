@@ -23,6 +23,11 @@ public class Projectile : MonoBehaviour {
 		{
 			rb.AddRelativeForce(Vector3.forward * speed * Time.deltaTime, ForceMode.Impulse);
 		}
+		else
+		{
+			rb.velocity = Vector3.zero;
+			rb.angularVelocity = Vector3.zero;
+		}
 		if (this.anchor != null)
 		{
 			this.transform.position = anchor.transform.position;
@@ -40,16 +45,18 @@ public class Projectile : MonoBehaviour {
 		// Stick into objects
 		if (collision.gameObject.tag == "Trees" || collision.gameObject.tag == "spikePlant")
 		{
+			// Create a anchor point for arrow to follow
 			GameObject anchor = new GameObject("Javalin_Anchor");
 			anchor.transform.position = this.transform.position;
 			anchor.transform.rotation = this.transform.rotation;
+			// Parent the anchor point to the crab holder (0) which has the animation
 			anchor.transform.parent = collision.transform;
+			speed = 0;
 			this.anchor = anchor.transform;
 			rb.isKinematic = true;
-			this.transform.GetChild(0).GetComponent<CapsuleCollider>().isTrigger = true;
+			this.transform.GetComponent<CapsuleCollider>().isTrigger = true;
 			rb.constraints = RigidbodyConstraints.FreezeAll;
 			flying = false;
-			speed = 0;
 		}
 		// Stick into enemy if health is greater then 0
 		if (collision.gameObject.tag == "Enemy")
@@ -63,11 +70,30 @@ public class Projectile : MonoBehaviour {
 				anchor.transform.parent = collision.transform;
 				this.anchor = anchor.transform;
 				rb.isKinematic = true;
-				this.transform.GetChild(0).GetComponent<CapsuleCollider>().isTrigger = true;
+				this.transform.GetComponent<CapsuleCollider>().isTrigger = true;
 				rb.constraints = RigidbodyConstraints.FreezeAll;
 				flying = false;
 				speed = 0;
 			//}
+		}
+		if (collision.gameObject.tag == "Crab" || collision.gameObject.tag == "SpikeJaw")
+		{
+			if (enemyScript.health <= 5)
+			{
+				enemyRigid.AddForce(transform.forward * enemyScript.burstForce, ForceMode.Impulse);
+			}
+			// Create a anchor point for arrow to follow
+			GameObject anchor = new GameObject("Javalin_Anchor");
+			anchor.transform.position = this.transform.position;
+			anchor.transform.rotation = this.transform.rotation;
+			// Parent the anchor point to the crap chold (0) which has the animation
+			anchor.transform.parent = collision.transform.GetChild(0);
+			this.anchor = anchor.transform;
+			rb.isKinematic = true;
+			this.transform.GetComponent<CapsuleCollider>().isTrigger = true;
+			rb.constraints = RigidbodyConstraints.FreezeAll;
+			flying = false;
+			speed = 0;
 		}
 		// Parent the enemy to the projectile 
 		/*if(collision.gameObject.tag == "Enemy")

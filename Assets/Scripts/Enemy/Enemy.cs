@@ -12,16 +12,20 @@ public class Enemy : MonoBehaviour
 	NavMeshAgent agent;
 	public Transform target;
 	public float normalSpeed = 3.5f;
-	public float chaseSpeed = 5.0f;
-	//bool enemyKilled;
+	public float chaseSpeed = 7.0f;
+	Animator animator;
+	MeshCollider collider;
 	public float burstForce = 2f;
 	bool isDestroyed;
 	Wander wanderScript;
 	AIAgent aiAgent;
 	Weapon weaponScript;
+	PlayerStats playerStats;
+	public GameObject explosion;
 
 	// Player detection
 	public float SeekRadius = 10f;
+	public float playerAttackRange = 2;
 	public float knockbackForce = 5f;
 	public float decreaseSpeed = 1f;
 
@@ -29,17 +33,30 @@ public class Enemy : MonoBehaviour
 	public bool attacked = false;
 	public float attackTimer;
 	float timer;
+	float attackRangeTimer = 0;
+	float attackAfterTime = 1;
+	bool attackInRange;
+
+	//Enemy sink
+	float sinkTimer;
+	bool startSinkFase;
+
 	private void Start()
 	{
+		collider = transform.GetChild(1).GetComponent<MeshCollider>();
+		animator = GetComponent<Animator>();
 		aiAgent = this.GetComponent<AIAgent>();
 		rb = GetComponent<Rigidbody>();
 		agent = this.GetComponent<NavMeshAgent>();
 		wanderScript = GetComponent<Wander>();
+		playerStats = GameObject.Find("Player").GetComponent<PlayerStats>();
 		target = GameObject.Find("Player").GetComponent<Transform>();
-		//weaponScript = GameObject.Find("Weapon").GetComponent<Weapon>();
 	}
 	public void Update()
 	{
+		sinkTime();
+		ResetAttack();
+		animator.SetFloat("Move", agent.speed);
 		if (SeekRadius < 20)
 		{
 			SeekRadius += Time.deltaTime;
@@ -58,6 +75,7 @@ public class Enemy : MonoBehaviour
 		{
 			if (SeekRadius > disToTarget)
 			{
+				animator.SetBool("Run", true);
 				agent.speed = chaseSpeed;
 				//SeekRadius = 8;
 				wanderScript.enabled = false;
@@ -67,17 +85,25 @@ public class Enemy : MonoBehaviour
 			}
 			else if (SeekRadius < disToTarget)
 			{
+				animator.SetBool("Run", false);
 				wanderScript.enabled = true;
 				aiAgent.enabled = true;
 				//SeekRadius = 5;
 				agent.speed = normalSpeed;
 			}
 		}
+		if (health <= 0)
+		{
+				this.gameObject.tag = "noHit";
+				Destroy();
+		}
 	}
 	private void OnDrawGizmos()
 	{
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireSphere(transform.position, SeekRadius);
+		Gizmos.color = Color.blue;
+		Gizmos.DrawWireSphere(transform.position, playerAttackRange);
 	}
 	public void TakeDamage(float amount)
 	{
@@ -92,33 +118,70 @@ public class Enemy : MonoBehaviour
 		if (collision.gameObject.tag == "spike")
 		{
 			health -= 25;
-			if (health <= 0f)
-			{
-				Destroy();
-			}
 		}
+	}
+	private void OnTriggerEnter(Collider other)
+	{
+		// Can attack when attack bool is false
 		if (!attacked)
 		{
-			if (collision.gameObject.tag == "Player")
+			if (other.gameObject.tag == "Player")
 			{
 				attacked = true;
-				Rigidbody player = collision.gameObject.GetComponent<Rigidbody>();
-				PlayerStats playeHealth = collision.gameObject.GetComponent<PlayerStats>();
-				player.AddRelativeForce(-Vector3.forward * knockbackForce, ForceMode.Impulse);
-				playeHealth.curHealth -= 25;
+				animator.SetTrigger("Attack");
+				attackInRange = true;
 			}
 		}
 	}
 	void Destroy()
 	{
-		//rb.AddForce(-transform.forward * burstForce, ForceMode.Impulse);
-		//enemyKilled = true;
+		//ssDestroy(this.gameObject);
+		//Instantiate(explosion, transform.position, transform.rotation);
+		startSinkFase = true;
+		animator.enabled = false;
 		agent.enabled = false;
-		rb.constraints = RigidbodyConstraints.None;
-		//Destroy(this.gameObject);
+		aiAgent.enabled = false;
+		rb.constraints = RigidbodyConstraints.None; 
 	}
-	void stickToProjectile()
+	void ResetAttack()
 	{
-
+		if (attacked)
+		{
+			attackTimer += Time.deltaTime;
+			if (attackTimer >= 1)
+			{
+				// Enemy can attack the player
+				attacked = false;
+				attackTimer = 0;
+			}
+		}
+	}
+	public void AttackInRange()
+	{
+		float distance = Vector3.Distance(agent.transform.position, target.position);
+		float disToTarget = Vector3.Distance(transform.position, target.position);
+		// check if player is in range
+		if (playerAttackRange > disToTarget)
+		{
+			playerStats.curHealth -= 25;
+		}
+	}
+	public void Knockback()
+	{
+		Debug.Log("Knocked Back");
+		rb.AddForce(-transform.forward * burstForce * 1.5f, ForceMode.Impulse);
+		rb.AddForce(transform.up * burstForce, ForceMode.Impulse);
+	}
+	void sinkTime()
+	{
+		if (startSinkFase)
+		{
+			sinkTimer += Time.deltaTime;
+		}
+		if (sinkTimer > 10)
+		{
+			collider.isTrigger = true;
+			sinkTimer = 0;
+		}
 	}
 }

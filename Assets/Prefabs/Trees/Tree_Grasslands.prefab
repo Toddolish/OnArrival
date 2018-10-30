@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4842116456713426}
   - component: {fileID: 33807301541284576}
   - component: {fileID: 23354894513035818}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Tree_Grasslands
-  m_TagString: Untagged
+  m_TagString: Trees
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

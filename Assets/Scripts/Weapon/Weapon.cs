@@ -17,7 +17,9 @@ public class Weapon : MonoBehaviour
 	public LayerMask layersToHit;
 	public float rotateSpeed = 10f;
 	Animator animator;
+	public Animator PlayerAnim;
 	Enemy enemyScript;
+	PlayerMovment playerMove;
 
 	[Header("Jav Ammo Rounds")]
 	public float currentJavAmmo;
@@ -30,10 +32,11 @@ public class Weapon : MonoBehaviour
 	public Transform javSpawnPoint;
 	public GameObject Javalin;
 	float javSpeed = 50;
-	[SerializeField] int javAmmoCartridge;
+	public int javAmmoCartridge;
 	public bool droppedCanister;
 	Transform canisterHoldingPoint;
 	public GameObject ammoCanister;
+	public bool reloading;
 
 	[Header("UI ELEMENTS")]
 	[Header("Text")]
@@ -47,9 +50,10 @@ public class Weapon : MonoBehaviour
 
 	void Start()
 	{
-		currentJavAmmo = maxJavAmmo;
+		currentJavAmmo = 0;
 		javAmmoBar = GameObject.Find("LiquidParent").GetComponent<Transform>();
 		canisterHoldingPoint = GameObject.Find("CanisterHolderPoint").GetComponent<Transform>();
+		playerMove = GameObject.Find("Player").GetComponent<PlayerMovment>();
 		ammoBarImage = GameObject.Find("AmmoBar").GetComponent<Image>();
 		
 		if (enemyScript != null)
@@ -61,27 +65,28 @@ public class Weapon : MonoBehaviour
 
 	void Update()
 	{
-		ammoBarImage.fillAmount = currentJavAmmo / 30;
+		ammoBarImage.fillAmount = currentJavAmmo / 6;
 		javTextCartridgeCounter.text = javAmmoCartridge.ToString();
 		Reload();
 		javAmmoBar.transform.localScale = new Vector3(javX, javAmmoY, javZ);
-		javZ = currentJavAmmo / 30;
+		javZ = currentJavAmmo / 6;
 		// Fire the Extraction Rifle
-		if (Time.timeScale == 1)
+		if (Time.timeScale == 1 && !playerMove.sprint)
 		{
-			if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire) // SemiAutoFire
+			if (Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire) // SemiAutoFire
 			{
-				if (enemyScript != null)
-				{
-					enemyScript.SeekRadius += 40f; // Enemys can hear loud noises
-				}
 				nextTimeToFire = Time.time + 1f / fireRate; // The higher the fire rate the less time between shots
 
 				if (currentJavAmmo > 0)
 				{
+					FindObjectOfType<AudioManager>().Play("Shoot");
 					shootJav();
 				}
 			}
+		}
+		if (javAmmoCartridge <= 0)
+		{
+			javAmmoCartridge = 0;
 		}
 		// Drop the Canister when ammo is less then one
 		if (!droppedCanister)
@@ -105,14 +110,11 @@ public class Weapon : MonoBehaviour
 	}
 	void shootJav()
 	{
-   
-
         muzzelFlash.Play();
 		currentJavAmmo--;
 		RaycastHit hit;
-		if (Physics.Raycast(javSpawnPoint.transform.position, fpsCam.transform.forward, out hit, range, layersToHit))
+		if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range, layersToHit))
 		{
-			Debug.Log(hit.transform.name);
 			Target target = hit.transform.GetComponent<Target>();
 			Enemy enemy = hit.transform.GetComponent<Enemy>();
 			if (target != null)
@@ -123,36 +125,52 @@ public class Weapon : MonoBehaviour
 			{
 				enemy.TakeDamage(damage);
 			}
-			GameObject javalinPrefab = Instantiate(Javalin, javSpawnPoint.position, fpsCam.transform.rotation);
 		}
+		// Instanciate outside of ray as it has been causeing spawn issues
+		Instantiate(Javalin, hit.point, fpsCam.transform.rotation);
+		Instantiate(impactEffect, hit.point, Quaternion.LookRotation(-hit.point));
 	}
 	public void AddSpikeAmmoCapsule()
 	{
-		javAmmoCartridge++;
+		javAmmoCartridge += 2;
 	}
 	void Reload()
 	{
 		// When "R" is pressed to reload and ammo is greater the zero and no more ammo in the clip
-		if (Input.GetKeyDown(KeyCode.R) && javAmmoCartridge > 0 && currentJavAmmo <= 0)
+		if (Input.GetKeyDown(KeyCode.R) && javAmmoCartridge > 0 && currentJavAmmo <= 0 && !reloading)
 		{
-			// Dropped Canister bool = false as we are not dropping this canister until we have 0 ammo
-			droppedCanister = false;
-			// Instanciate new canister onto the canisterHolderPoint
-			GameObject canister = Instantiate(ammoCanister, canisterHoldingPoint.transform.position, canisterHoldingPoint.rotation);
-			// Parent canister to canisterHoldingPoint
-			canister.transform.parent = canisterHoldingPoint.transform;
-			// Find the settings for the new Canister
-			javAmmoBar = GameObject.Find("LiquidParent").GetComponent<Transform>();
-			canister.name = "CanisterHolder";
-			// Reload the ammo and spikeCartridge-- 
-			javAmmoCartridge--;
-			// set currentJavAmmo to the maxJavAmmo
-			currentJavAmmo = maxJavAmmo;
-			// Check ammo cartridge so it does not go below zero andif so will always be set back to zero
+			reloading = true;
+			// Play the reload animation
+			//////////////////////////////////////////////////// change will be need for animation to spawn
+			PlayerAnim.SetTrigger("Reload");
+			
+			// Check ammo cartridge so it does not go below zero and if so will always be set back to zero --- canister counter
 			if (javAmmoCartridge <= 0)
 			{
 				javAmmoCartridge = 0;
 			}
 		}
+	}
+	public void SpawnCanister()
+	{
+		// Dropped Canister bool = false as we are not dropping this canister until we have 0 ammo
+		droppedCanister = false;
+		// Instanciate new canister onto the canisterHolderPoint
+		GameObject canister = Instantiate(ammoCanister, canisterHoldingPoint.transform.position, canisterHoldingPoint.rotation);
+		// Parent canister to canisterHoldingPoint
+		canister.transform.parent = canisterHoldingPoint.transform;
+		// Find the settings for the new Canister
+		javAmmoBar = GameObject.Find("LiquidParent").GetComponent<Transform>();
+		canister.name = "CanisterHolder";
+		// Reload the ammo and spikeCartridge-- 
+		javAmmoCartridge--;
+		// set currentJavAmmo to the maxJavAmmo
+		currentJavAmmo = maxJavAmmo;
+		// Check ammo cartridge so it does not go below zero and if so will always be set back to zero --- canister counter
+		if (javAmmoCartridge <= 0)
+		{
+			javAmmoCartridge = 0;
+		}
+		reloading = false;
 	}
 }

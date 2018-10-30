@@ -8,6 +8,7 @@ public class Spawner : MonoBehaviour
 	[Header("Spawner")]
 	public GameObject Enemy;
 	public float countDown;
+	int spawnIndex;
 
 	void Start()
 	{
@@ -20,6 +21,7 @@ public class Spawner : MonoBehaviour
 
 		if (countDown > 10)
 		{
+			spawnIndex ++;
 			Instantiate(Enemy, transform.position, transform.rotation);
 			countDown = 0;
 		}

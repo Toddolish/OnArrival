@@ -24,6 +24,7 @@ public class PlayerStats : MonoBehaviour
 	public float maxEnergy = 100f;
 	public Image energyBar;
 	public float energyRegenRate = 1f;
+	public bool cannotSprint; // Once energy hits zero player cannot run until energy regenerates for 5 seconds
 
 	private float energyRegenReadyTimer;
 
@@ -38,7 +39,7 @@ public class PlayerStats : MonoBehaviour
 	{
         #region Health
         healthBar_Object.transform.localScale = new Vector3(0.125382f, heathBarScaleY, 0.125382f);
-        heathBarScaleY = curHealth / 283;
+        heathBarScaleY = curHealth / 263;
         if (curHealth <= 0)
 		{
 			GameOver();
@@ -61,6 +62,7 @@ public class PlayerStats : MonoBehaviour
 		#region Energy
 		if (curEnergy <= 0)
 		{
+			cannotSprint = true;
 			curEnergy = 0;
 		}
 		else if (curEnergy > maxEnergy)
