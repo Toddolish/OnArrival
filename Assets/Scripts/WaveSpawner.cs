@@ -87,7 +87,6 @@ public class WaveSpawner : MonoBehaviour
         if(nextWave + 1 > waves.Length - 1)
         {
             nextWave = 0;
-            Debug.Log("all waves completed");
         }
         else
         {
@@ -113,7 +112,6 @@ public class WaveSpawner : MonoBehaviour
     }
    IEnumerator SpawnWave(Wave _wave)
     {
-        Debug.Log("spawning wave" + _wave.name);
         state = SpawnState.SPAWNING;
 
         for (int i = 0; i < _wave.count; i++)

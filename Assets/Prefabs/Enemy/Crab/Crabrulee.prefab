@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4580423665073464}
   - component: {fileID: 137923563924941834}
   - component: {fileID: 64763301493711938}
+  - component: {fileID: 136643488466981026}
   m_Layer: 0
   m_Name: Crab
   m_TagString: Crab
@@ -317,7 +318,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1291997300251508}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 109.25287, y: 40.286816, z: -9.115387}
+  m_LocalPosition: {x: 80.7937, y: 40.305126, z: -30.166595}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4402644864215918}
@@ -361,7 +362,7 @@ MeshCollider:
   m_GameObject: {fileID: 1178958742792718}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 1
   m_CookingOptions: 14
@@ -440,6 +441,19 @@ MonoBehaviour:
   decreaseSpeed: 1
   attacked: 0
   attackTimer: 0
+--- !u!136 &136643488466981026
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1178958742792718}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.46
+  m_Height: 1.6173668
+  m_Direction: 1
+  m_Center: {x: -0.050000012, y: 0.7761593, z: 0.030000001}
 --- !u!136 &136766372669105006
 CapsuleCollider:
   m_ObjectHideFlags: 1

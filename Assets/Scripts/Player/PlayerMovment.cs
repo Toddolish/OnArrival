@@ -52,7 +52,7 @@ public class PlayerMovment : MonoBehaviour
 	RaycastHit shootHit;
 	int shootableMask;
 	Enemy enemyScript;
-	#endregion
+    #endregion
 	//Beacon
 	public Text beaconText;
 	void Start()
@@ -136,7 +136,6 @@ public class PlayerMovment : MonoBehaviour
 	}
 	void Extract()
 	{
-		Debug.Log("use pulse skill");
 		RaycastHit[] hits;
 		hits = Physics.SphereCastAll(transform.position, radius, transform.forward, range, spikePlant);
 
@@ -210,14 +209,17 @@ public class PlayerMovment : MonoBehaviour
 		// If pulseReady is true it can be used with middle mouse button
 		if (pulseReady && Input.GetKeyDown(KeyCode.Mouse2))
 		{
-			animMain.SetTrigger("Palm");
-		}
+            animMain.SetTrigger("Palm");
+            if (weapon.javAmmoCartridge > 0)
+            {
+                weapon.javAmmoCartridge --;
+            }
+        }
 		if (!pulseReady)
 		{
 			pulseTimer += Time.deltaTime;
 			if (pulseTimer >= pulseCooldownTime)
 			{
-				Debug.Log("your pulse skill is ready to be used");
 				pulseReady = true;
 				pulseTimer = 0;
 			}
@@ -286,7 +288,6 @@ public class PlayerMovment : MonoBehaviour
 				{
 					if (weapon.javAmmoCartridge > 0)
 					{
-						weapon.javAmmoCartridge--;
 						enemyScript.Knockback();
 						enemyScript.health -= 50;
 					}
