@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
 	public float normalSpeed = 3.5f;
 	public float chaseSpeed = 7.0f;
 	Animator animator;
-	MeshCollider collider;
+	CapsuleCollider collider;
 	public float burstForce = 2f;
 	bool isDestroyed;
 	Wander wanderScript;
@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour
 
 	private void Start()
 	{
-		collider = transform.GetChild(1).GetComponent<MeshCollider>();
+		collider = transform.GetChild(1).GetComponent<CapsuleCollider>();
 		animator = GetComponent<Animator>();
 		aiAgent = this.GetComponent<AIAgent>();
 		rb = GetComponent<Rigidbody>();

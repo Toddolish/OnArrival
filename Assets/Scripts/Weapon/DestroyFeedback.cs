@@ -11,9 +11,9 @@ public class DestroyFeedback : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
     }
 
-    void FixedUpdate()
+    void LateUpdate()
     {
         rb.AddRelativeForce(Vector3.forward * speed * Time.deltaTime, ForceMode.Impulse);
-        Destroy(this.gameObject, 0.02f);
+        Destroy(this.gameObject, 0.04f);
     }
 }

@@ -127,7 +127,8 @@ public class Weapon : MonoBehaviour
 		}
 		// Instanciate outside of ray as it has been causeing spawn issues
 		Instantiate(Javalin, hit.point, fpsCam.transform.rotation);
-        Instantiate(JavalinFeedback, javSpawnPoint.position, fpsCam.transform.rotation);
+        GameObject feedback = Instantiate(JavalinFeedback, javSpawnPoint.position, fpsCam.transform.rotation);
+        feedback.transform.parent = this.transform.parent;
         Instantiate(impactEffect, hit.point, Quaternion.LookRotation(-hit.point));
 	}
 	public void AddSpikeAmmoCapsule()
