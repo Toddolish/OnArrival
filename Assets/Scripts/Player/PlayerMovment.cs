@@ -35,6 +35,7 @@ public class PlayerMovment : MonoBehaviour
 	bool down;
 	#endregion
 	#region Ammo Collection 
+   [Header("Ammo Collection")]
 	// Collect ammo 
 	public bool pickup = false;
 	float pickupTimer;
@@ -53,8 +54,15 @@ public class PlayerMovment : MonoBehaviour
 	int shootableMask;
 	Enemy enemyScript;
     #endregion
-	//Beacon
-	public Text beaconText;
+    #region Beacon
+    [Header("Beacon Collection")]
+    //Beacon
+    // Create and index for beacons how many you have collected
+    public int beaconIndex;
+    public Text alreadyText;
+    #endregion
+
+    public Text beaconText;
 	void Start()
 	{
 		pulseReady = true;
@@ -68,36 +76,12 @@ public class PlayerMovment : MonoBehaviour
 	}
 	private void Update()
 	{
-		Extract();
-		Jump();
-		// When player stop sprinting
-		// Stop walk animation
-		if (aimScript.aiming)
-		{
-			animMain.SetBool("Sprinting", false);
-			animMain.SetFloat("Walking", 0);
-			moveSpeed = startMoveSpeed;
-			sprint = false;
-		}
-		else
-		{
-			// I dont know!
-		}
-		#region Methods
-		Crouch();
+        #region Methods
+        Extract();
+        Jump();
 		PulseCharge();
 		Sprinting();
 		#endregion
-		if (pickup)
-		{
-			collectText.enabled = false;
-			pickupTimer += Time.deltaTime;
-			if (pickupTimer > 0.5)
-			{
-				pickup = false;
-				pickupTimer = 0;
-			}
-		}
 	}
 	private void LateUpdate()
 	{
@@ -136,7 +120,18 @@ public class PlayerMovment : MonoBehaviour
 	}
 	void Extract()
 	{
-		RaycastHit[] hits;
+        if (pickup)
+        {
+            collectText.enabled = false;
+            pickupTimer += Time.deltaTime;
+            if (pickupTimer > 0.5)
+            {
+                pickup = false;
+                pickupTimer = 0;
+            }
+        }
+
+        RaycastHit[] hits;
 		hits = Physics.SphereCastAll(transform.position, radius, transform.forward, range, spikePlant);
 
 		if (hits.Length > 0)
@@ -171,39 +166,29 @@ public class PlayerMovment : MonoBehaviour
 	}
 	private void OnTriggerStay(Collider other)
 	{
-		if (other.gameObject.tag == "Beacon")
-		{
-			beaconText.enabled = true;
-			if (Input.GetKeyDown(KeyCode.E))
-			{
-				Destroy(other.gameObject);
-			}
-		}
-		else
-		{
-			beaconText.enabled = false;
-		}
-	}
-	public void Crouch()
-	{
-		if (Input.GetKeyDown(KeyCode.C) && !crouch)
-		{
-			// crouch is animation and bool is true
-			anim.SetBool("crouch", true);
-			crouch = true;
-			// Sprinting bool and animation is false
-			anim.SetBool("sprinting", false);
-			sprint = false;
-			// movement speed is now crouch speed
-			moveSpeed = crouchMoveSpeed;
-		}
-		else if (Input.GetKeyDown(KeyCode.C) && crouch)
-		{
-			anim.SetBool("crouch", false);
-			crouch = false;
-			moveSpeed = startMoveSpeed;
-		}
-	}
+        if (other.gameObject.tag == "Beacon")
+        {
+            beaconText.enabled = true;
+            if (beaconIndex == 0)
+            {
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    // Increase beacon index
+                    // Disable Beacon Text
+                    beaconIndex++;
+                    beaconText.enabled = false;
+                    Destroy(other.gameObject);
+                }
+            }
+        }
+    }
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Beacon")
+        {
+            beaconText.enabled = false;
+        }
+    }
 	public void PulseCharge()
 	{
 		// If pulseReady is true it can be used with middle mouse button
@@ -227,7 +212,21 @@ public class PlayerMovment : MonoBehaviour
 	}
 	public void Sprinting()
 	{
-		if (!aimScript.aiming)
+        // When player stop sprinting
+        // Stop walk animation
+        if (aimScript.aiming)
+        {
+            animMain.SetBool("Sprinting", false);
+            animMain.SetFloat("Walking", 0);
+            moveSpeed = startMoveSpeed;
+            sprint = false;
+        }
+        else
+        {
+            // I dont know!
+        }
+
+        if (!aimScript.aiming)
 		{
 			if (playerStats.cannotSprint == false)
 			{
@@ -266,10 +265,19 @@ public class PlayerMovment : MonoBehaviour
 		SpikePlant spikePlant;
 		if (spikePlant = shootHit.transform.GetComponent<SpikePlant>())
 		{
-			spikePlant.curSap = 0;
-			weapon.AddSpikeAmmoCapsule();
-			pickup = true;
-		}
+            if (!spikePlant.collectHealth)
+            {
+                spikePlant.curSap = 0;
+                weapon.AddSpikeAmmoCapsule();
+                pickup = true;
+            }
+            if (spikePlant.collectHealth)
+            {
+                spikePlant.curSap = 0;
+                playerStats.addHealth();
+                pickup = true;
+            }
+        }
 	}
 	public void PulseDischarge()
 	{

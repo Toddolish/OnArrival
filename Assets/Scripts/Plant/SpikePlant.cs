@@ -13,6 +13,7 @@ public class SpikePlant : MonoBehaviour
 	float sapGrothRate = 0.01f;
 	// bool for time for harvest
 	public bool timeForHarvest;
+    public bool collectHealth;
 
 	private void Start()
 	{

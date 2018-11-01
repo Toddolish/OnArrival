@@ -23,14 +23,6 @@ public class Wander : SteeringBehaviour
     }
     public override Vector3 GetForce()
     {
-        /*
-            -32767                                             32767
-             |------------------------0------------------------|
-                        |___________________________|
-                                Random Range
-
-        */
-        //HEX 0x7fff = 32767
         Vector3 force = Vector3.zero;
         float randX = Random.Range(0, 0x7fff) - (0x7fff / 2);
         float randZ = Random.Range(0, 0x7fff) - (0x7fff / 2);

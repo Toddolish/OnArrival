@@ -7140,21 +7140,21 @@ MonoBehaviour:
     count: 2
     rate: 0.1
     enemy2: {fileID: 4756675263830478, guid: 0a5b82c4a2328d94d867ba4552f9b926, type: 2}
-    count2: 3
+    count2: 0
     enemy3: {fileID: 4756675263830478, guid: 0a5b82c4a2328d94d867ba4552f9b926, type: 2}
-    count3: 4
+    count3: 0
   - name: 
-    enemy: {fileID: 0}
-    count: 0
-    rate: 0
+    enemy: {fileID: 4756675263830478, guid: 0a5b82c4a2328d94d867ba4552f9b926, type: 2}
+    count: 2
+    rate: 0.1
     enemy2: {fileID: 0}
     count2: 0
     enemy3: {fileID: 0}
     count3: 0
   - name: 
-    enemy: {fileID: 0}
-    count: 0
-    rate: 0
+    enemy: {fileID: 4756675263830478, guid: 0a5b82c4a2328d94d867ba4552f9b926, type: 2}
+    count: 3
+    rate: 0.2
     enemy2: {fileID: 0}
     count2: 0
     enemy3: {fileID: 0}

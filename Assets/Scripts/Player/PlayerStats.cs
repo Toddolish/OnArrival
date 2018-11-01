@@ -18,6 +18,7 @@ public class PlayerStats : MonoBehaviour
     public MeshRenderer healthMesh;
     public Material greenHealth;
     public Material redHealth;
+    public Animator splashAnim;
 
 	[Header("Energy")]
 	public float curEnergy;
@@ -77,4 +78,12 @@ public class PlayerStats : MonoBehaviour
 	{
 		SceneManager.LoadScene(1);
 	}
+    public void addHealth()
+    {
+        curHealth = maxEnergy;
+    }
+    public void SplashDamage()
+    {
+        splashAnim.SetTrigger("Ouch");
+    }
 }

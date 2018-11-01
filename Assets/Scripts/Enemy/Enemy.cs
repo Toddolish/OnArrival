@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
 	public float normalSpeed = 3.5f;
 	public float chaseSpeed = 7.0f;
 	Animator animator;
-	CapsuleCollider collider;
+	MeshCollider collider;
 	public float burstForce = 2f;
 	bool isDestroyed;
 	Wander wanderScript;
@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour
 
 	private void Start()
 	{
-		collider = transform.GetChild(1).GetComponent<CapsuleCollider>();
+		collider = transform.GetChild(1).GetComponent<MeshCollider>();
 		animator = GetComponent<Animator>();
 		aiAgent = this.GetComponent<AIAgent>();
 		rb = GetComponent<Rigidbody>();
@@ -56,7 +56,7 @@ public class Enemy : MonoBehaviour
 	{
 		sinkTime();
 		ResetAttack();
-		animator.SetFloat("Move", agent.speed);
+        animator.SetFloat("Move", agent.speed);
 		if (SeekRadius < 20)
 		{
 			SeekRadius += Time.deltaTime;
@@ -117,7 +117,7 @@ public class Enemy : MonoBehaviour
 	{
 		if (collision.gameObject.tag == "spike")
 		{
-			health -= 25;
+			health -= 10;
 		}
 	}
 	private void OnTriggerEnter(Collider other)
@@ -135,14 +135,15 @@ public class Enemy : MonoBehaviour
 	}
 	void Destroy()
 	{
-		//ssDestroy(this.gameObject);
-		//Instantiate(explosion, transform.position, transform.rotation);
-		startSinkFase = true;
+        //ssDestroy(this.gameObject);
+        //Instantiate(explosion, transform.position, transform.rotation);
+        rb.constraints = RigidbodyConstraints.None;
+        startSinkFase = true;
 		animator.enabled = false;
 		agent.enabled = false;
 		aiAgent.enabled = false;
-		rb.constraints = RigidbodyConstraints.None; 
-	}
+        rb.isKinematic = false;
+    }
 	void ResetAttack()
 	{
 		if (attacked)
@@ -164,12 +165,14 @@ public class Enemy : MonoBehaviour
 		if (playerAttackRange > disToTarget)
 		{
 			playerStats.curHealth -= 25;
+            playerStats.SplashDamage();
 		}
 	}
 	public void Knockback()
 	{
 		Debug.Log("Knocked Back");
-		rb.AddForce(-transform.forward * burstForce * 1.5f, ForceMode.Impulse);
+        rb.isKinematic = false;
+        rb.AddForce(-transform.forward * burstForce * 1.5f, ForceMode.Impulse);
 		rb.AddForce(transform.up * burstForce, ForceMode.Impulse);
 	}
 	void sinkTime()

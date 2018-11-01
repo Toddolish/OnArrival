@@ -31,6 +31,7 @@ public class Weapon : MonoBehaviour
 	float javAmmoY = 1f;
 	public Transform javSpawnPoint;
 	public GameObject Javalin;
+    public GameObject JavalinFeedback;
 	float javSpeed = 50;
 	public int javAmmoCartridge;
 	public bool droppedCanister;
@@ -41,8 +42,6 @@ public class Weapon : MonoBehaviour
 	[Header("UI ELEMENTS")]
 	[Header("Text")]
 	public Text javTextCartridgeCounter;
-	public Text normalTextCartridgeCounter;
-	public Text orbTextCartridgeCounter;
 
 	// Hologram Image bar on the weapon Canvas to display to cur ammo;
 	public Image ammoBarImage;
@@ -50,7 +49,7 @@ public class Weapon : MonoBehaviour
 
 	void Start()
 	{
-		currentJavAmmo = 0;
+		currentJavAmmo = maxJavAmmo;
 		javAmmoBar = GameObject.Find("LiquidParent").GetComponent<Transform>();
 		canisterHoldingPoint = GameObject.Find("CanisterHolderPoint").GetComponent<Transform>();
 		playerMove = GameObject.Find("Player").GetComponent<PlayerMovment>();
@@ -65,15 +64,15 @@ public class Weapon : MonoBehaviour
 
 	void Update()
 	{
-		ammoBarImage.fillAmount = currentJavAmmo / 6;
+		ammoBarImage.fillAmount = currentJavAmmo / 30;
 		javTextCartridgeCounter.text = javAmmoCartridge.ToString();
 		Reload();
 		javAmmoBar.transform.localScale = new Vector3(javX, javAmmoY, javZ);
-		javZ = currentJavAmmo / 6;
+		javZ = currentJavAmmo / 30;
 		// Fire the Extraction Rifle
 		if (Time.timeScale == 1 && !playerMove.sprint)
 		{
-			if (Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire) // SemiAutoFire
+			if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire) // SemiAutoFire
 			{
 				nextTimeToFire = Time.time + 1f / fireRate; // The higher the fire rate the less time between shots
 
@@ -128,7 +127,8 @@ public class Weapon : MonoBehaviour
 		}
 		// Instanciate outside of ray as it has been causeing spawn issues
 		Instantiate(Javalin, hit.point, fpsCam.transform.rotation);
-		Instantiate(impactEffect, hit.point, Quaternion.LookRotation(-hit.point));
+        Instantiate(JavalinFeedback, javSpawnPoint.position, fpsCam.transform.rotation);
+        Instantiate(impactEffect, hit.point, Quaternion.LookRotation(-hit.point));
 	}
 	public void AddSpikeAmmoCapsule()
 	{
