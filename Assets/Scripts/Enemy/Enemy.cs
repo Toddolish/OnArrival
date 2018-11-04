@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
 	public float normalSpeed = 3.5f;
 	public float chaseSpeed = 7.0f;
 	Animator animator;
-	CapsuleCollider collider;
+	MeshCollider collider;
 	public float burstForce = 2f;
 	bool isDestroyed;
 	Wander wanderScript;
@@ -41,9 +41,15 @@ public class Enemy : MonoBehaviour
 	float sinkTimer;
 	bool startSinkFase;
 
+	//Enemy Knockback 
+	//take minor melee damage
+	float resetTime;
+	bool knockedBack;
+	
+
 	private void Start()
 	{
-		collider = transform.GetChild(1).GetComponent<CapsuleCollider>();
+		collider = transform.GetChild(1).GetComponent<MeshCollider>();
 		animator = GetComponent<Animator>();
 		aiAgent = this.GetComponent<AIAgent>();
 		rb = GetComponent<Rigidbody>();
@@ -54,6 +60,7 @@ public class Enemy : MonoBehaviour
 	}
 	public void Update()
 	{
+		#region Enemy seek and Attack
 		sinkTime();
 		ResetAttack();
         animator.SetFloat("Move", agent.speed);
@@ -71,6 +78,8 @@ public class Enemy : MonoBehaviour
 		}
 		float distance = Vector3.Distance(agent.transform.position, target.position);
 		float disToTarget = Vector3.Distance(transform.position, target.position);
+		#endregion
+		#region Enemy Health
 		if (health > 0)
 		{
 			if (SeekRadius > disToTarget)
@@ -95,8 +104,26 @@ public class Enemy : MonoBehaviour
 		if (health <= 0)
 		{
 				this.gameObject.tag = "noHit";
+				this.gameObject.layer = LayerMask.NameToLayer("Ignore");
 				Destroy();
 		}
+		#endregion
+		#region Knockback
+		if (knockedBack)
+		{
+			resetTime += Time.deltaTime;
+			rb.isKinematic = false;
+			rb.AddForce(-transform.forward * burstForce * 1.5f, ForceMode.Impulse);
+			rb.AddForce(transform.up * burstForce, ForceMode.Impulse);
+		}
+
+		if (resetTime > 0.1)
+		{
+			knockedBack = false;
+			rb.isKinematic = true;
+			resetTime = 0;
+		}
+		#endregion
 	}
 	private void OnDrawGizmos()
 	{
@@ -115,6 +142,10 @@ public class Enemy : MonoBehaviour
 	}
 	private void OnCollisionEnter(Collision collision)
 	{
+		if (collision.gameObject.tag == "noHit")
+		{
+			Physics.IgnoreCollision(this.collider, collider);
+		}
 		if (collision.gameObject.tag == "spike")
 		{
 			health -= 10;
@@ -135,14 +166,13 @@ public class Enemy : MonoBehaviour
 	}
 	void Destroy()
 	{
-        //ssDestroy(this.gameObject);
-        //Instantiate(explosion, transform.position, transform.rotation);
-        rb.constraints = RigidbodyConstraints.None;
-        startSinkFase = true;
+		//ssDestroy(this.gameObject);
+		//Instantiate(explosion, transform.position, transform.rotation);
+		rb.constraints = RigidbodyConstraints.None;
+        //startSinkFase = true;
 		animator.enabled = false;
 		agent.enabled = false;
 		aiAgent.enabled = false;
-        rb.isKinematic = false;
     }
 	void ResetAttack()
 	{
@@ -170,10 +200,19 @@ public class Enemy : MonoBehaviour
 	}
 	public void Knockback()
 	{
-		Debug.Log("Knocked Back");
-        rb.isKinematic = false;
-        rb.AddForce(-transform.forward * burstForce * 1.5f, ForceMode.Impulse);
-		rb.AddForce(transform.up * burstForce, ForceMode.Impulse);
+		//if enemy health above 0 then do a knockback
+		if (health > 0)
+		{
+			knockedBack = true;
+		}
+
+		//if enemy health less <= to zero then do a death knockback
+		if (health <= 0)
+		{
+			rb.isKinematic = false;
+			rb.AddForce(-transform.forward * burstForce * 1.5f, ForceMode.Impulse);
+			rb.AddForce(transform.up * burstForce, ForceMode.Impulse);
+		}
 	}
 	void sinkTime()
 	{

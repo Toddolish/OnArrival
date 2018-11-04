@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4580423665073464}
   - component: {fileID: 137923563924941834}
-  - component: {fileID: 136825404344123538}
+  - component: {fileID: 64276234561490550}
   m_Layer: 0
   m_Name: Crab
   m_TagString: Crab
@@ -353,6 +353,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!64 &64276234561490550
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1178958742792718}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300000, guid: 2b204d438e66e864782f923cc32c5d72, type: 3}
 --- !u!95 &95924475104763922
 Animator:
   serializedVersion: 3
@@ -439,19 +453,6 @@ CapsuleCollider:
   m_Height: 2.0522385
   m_Direction: 1
   m_Center: {x: 0, y: 0.52611923, z: 0}
---- !u!136 &136825404344123538
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1178958742792718}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.3191414
-  m_Height: 0.84391403
-  m_Direction: 1
-  m_Center: {x: -0.034168243, y: 0.6306629, z: 0.15444544}
 --- !u!137 &137923563924941834
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -467,10 +468,10 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: bc54aa8bba4915547954d5f8fa97ab94, type: 2}
+  - {fileID: 2100000, guid: 9b72b63c1f6437d4792cbcfec811364a, type: 2}
   - {fileID: 2100000, guid: cd67bb04d1333844f82f8ce83ec29fe5, type: 2}
-  - {fileID: 2100002, guid: 9e8b19294b3627e4b88421b31e8a1dbc, type: 3}
-  - {fileID: 2100000, guid: fc1775022b4d25a4bb02c28ec94310f2, type: 2}
+  - {fileID: 2100000, guid: 9b72b63c1f6437d4792cbcfec811364a, type: 2}
+  - {fileID: 2100000, guid: e70bdad2f1f974a4caff8b2d1bff1895, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

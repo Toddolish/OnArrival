@@ -9,18 +9,19 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1336715422675680}
+  m_RootGameObject: {fileID: 1301255966987364}
   m_IsPrefabAsset: 1
---- !u!1 &1336715422675680
+--- !u!1 &1301255966987364
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4189033725998366}
-  - component: {fileID: 33294242595692574}
-  - component: {fileID: 23727294525667282}
+  - component: {fileID: 4314239705394264}
+  - component: {fileID: 33208356771925406}
+  - component: {fileID: 23988611115898816}
+  - component: {fileID: 64692238797427874}
   m_Layer: 0
   m_Name: Crablet_Spawner
   m_TagString: Untagged
@@ -28,15 +29,15 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1494551523318692
+--- !u!1 &1391981410718336
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4972654746940290}
-  - component: {fileID: 114706385571798338}
+  - component: {fileID: 4655546324285772}
+  - component: {fileID: 114936567049616832}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -44,39 +45,39 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4189033725998366
+--- !u!4 &4314239705394264
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1336715422675680}
+  m_GameObject: {fileID: 1301255966987364}
   m_LocalRotation: {x: -0, y: -0.97678363, z: -0, w: 0.21422838}
   m_LocalPosition: {x: -15.150177, y: 1.3049908, z: 80.083694}
-  m_LocalScale: {x: 21.973425, y: 21.973413, z: 21.973425}
+  m_LocalScale: {x: 21.97344, y: 21.97342, z: 21.97344}
   m_Children:
-  - {fileID: 4972654746940290}
+  - {fileID: 4655546324285772}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -155.259, z: 0}
---- !u!4 &4972654746940290
+  m_LocalEulerAnglesHint: {x: 0, y: -254.772, z: 0}
+--- !u!4 &4655546324285772
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1494551523318692}
+  m_GameObject: {fileID: 1391981410718336}
   m_LocalRotation: {x: -0, y: 0.9963092, z: -0, w: -0.0858366}
-  m_LocalPosition: {x: 0.052442353, y: -0.009329019, z: 0.29075578}
+  m_LocalPosition: {x: 0.0329, y: -0.009329019, z: 0.1781}
   m_LocalScale: {x: 0.045509562, y: 0.045509543, z: 0.045509562}
   m_Children: []
-  m_Father: {fileID: 4189033725998366}
+  m_Father: {fileID: 4314239705394264}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23727294525667282
+--- !u!23 &23988611115898816
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1336715422675680}
+  m_GameObject: {fileID: 1301255966987364}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -86,7 +87,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 0ecc277167b35314f8867d55a91e1c96, type: 2}
+  - {fileID: 2100000, guid: ae17597b926bddf449badd0cff171ed1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -106,24 +107,39 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33294242595692574
+--- !u!33 &33208356771925406
 MeshFilter:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1336715422675680}
+  m_GameObject: {fileID: 1301255966987364}
   m_Mesh: {fileID: 4300000, guid: bb044dc74af585c4d815e44cf79d374b, type: 3}
---- !u!114 &114706385571798338
+--- !u!64 &64692238797427874
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1301255966987364}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300000, guid: bb044dc74af585c4d815e44cf79d374b, type: 3}
+--- !u!114 &114936567049616832
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1494551523318692}
+  m_GameObject: {fileID: 1391981410718336}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2dec50212a5eb246bed3c4c86d1ab9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeForNextWave: 120
   waveText: {fileID: 0}
   waveCount: 0
   waves:
@@ -152,5 +168,5 @@ MonoBehaviour:
     enemy3: {fileID: 0}
     count3: 0
   spawnPoints:
-  - {fileID: 4972654746940290}
-  timeBetweenWaves: 120
+  - {fileID: 4655546324285772}
+  timeBetweenWaves: 5

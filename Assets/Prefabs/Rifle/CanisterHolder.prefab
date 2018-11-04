@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4803736135292160}
   - component: {fileID: 33204299767167074}
   - component: {fileID: 23729453606598550}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: LiquidConsumer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4479873735155802}
   - component: {fileID: 54278805617280562}
   - component: {fileID: 136930855308057720}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: CanisterHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 4923687029132590}
   - component: {fileID: 33821111777115922}
   - component: {fileID: 23785167965807936}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Liquid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4352624604500694}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: LiquidParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 4605867638634238}
   - component: {fileID: 33658171549374996}
   - component: {fileID: 23770792400527330}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: CanisterCase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1528192957964778}
   m_LocalRotation: {x: -0.00069966156, y: -0.001835071, z: -0.04344978, w: 0.9990538}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.000005434517, y: 0.000005434517, z: -0.000001079149}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4803736135292160}

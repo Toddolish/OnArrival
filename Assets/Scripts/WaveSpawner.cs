@@ -5,24 +5,26 @@ using UnityEngine.UI;
 
 public class WaveSpawner : MonoBehaviour
 {
-    public enum SpawnState
-    { 
-        SPAWNING, WAITING, COUNTING
-    }
-    [System.Serializable]
-    public class Wave
-    {
-        public string name;
-        public Transform enemy;
-        public int count;
-        public float rate;
+	public enum SpawnState
+	{
+		SPAWNING, WAITING, COUNTING
+	}
+	[System.Serializable]
+	public class Wave
+	{
+		public string name;
+		public Transform enemy;
+		public int count;
+		public float rate;
 
-        public Transform enemy2;
-        public int count2;
+		public Transform enemy2;
+		public int count2;
 
-        public Transform enemy3;
-        public int count3;
-    }
+		public Transform enemy3;
+		public int count3;
+	}
+	[Header("When will the enemies spawn after they have all been destroyed")]
+	public float timeForNextWave = 120f;
     public Text waveText;
     public int waveCount;
     public Wave[] waves;
@@ -30,7 +32,8 @@ public class WaveSpawner : MonoBehaviour
 
     public Transform[] spawnPoints;
 
-    public float timeBetweenWaves;
+	[Header("This will be the very first time enemies wait to spawn")]
+	public float timeBetweenWaves;
     private float waveCountdown;
     private SpawnState state = SpawnState.COUNTING;
 
@@ -50,6 +53,7 @@ public class WaveSpawner : MonoBehaviour
             Debug.Log("No spawn Points Referenced");
         }
         waveCountdown = timeBetweenWaves;
+
     }
 	
 	void Update ()
@@ -83,7 +87,7 @@ public class WaveSpawner : MonoBehaviour
     void WaveCompleted()
     {
         state = SpawnState.COUNTING;
-        waveCountdown = timeBetweenWaves;
+        waveCountdown = timeForNextWave;
         if(nextWave + 1 > waves.Length - 1)
         {
             nextWave = 0;

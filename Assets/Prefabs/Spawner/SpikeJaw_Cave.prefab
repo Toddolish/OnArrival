@@ -89,7 +89,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: b605f2aeeb438ff4090a3648370e5369, type: 2}
+  - {fileID: 2100000, guid: 0ecc277167b35314f8867d55a91e1c96, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7139,9 +7139,9 @@ MonoBehaviour:
     enemy: {fileID: 4756675263830478, guid: 0a5b82c4a2328d94d867ba4552f9b926, type: 2}
     count: 2
     rate: 0.1
-    enemy2: {fileID: 4756675263830478, guid: 0a5b82c4a2328d94d867ba4552f9b926, type: 2}
+    enemy2: {fileID: 0}
     count2: 0
-    enemy3: {fileID: 4756675263830478, guid: 0a5b82c4a2328d94d867ba4552f9b926, type: 2}
+    enemy3: {fileID: 0}
     count3: 0
   - name: 
     enemy: {fileID: 4756675263830478, guid: 0a5b82c4a2328d94d867ba4552f9b926, type: 2}
@@ -7161,7 +7161,7 @@ MonoBehaviour:
     count3: 0
   spawnPoints:
   - {fileID: 4641882525806382}
-  timeBetweenWaves: 5
+  timeBetweenWaves: 120
 --- !u!208 &208607115235731616
 NavMeshObstacle:
   m_ObjectHideFlags: 1

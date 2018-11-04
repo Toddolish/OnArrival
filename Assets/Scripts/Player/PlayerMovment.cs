@@ -296,13 +296,13 @@ public class PlayerMovment : MonoBehaviour
 				{
 					if (weapon.javAmmoCartridge > 0)
 					{
-						enemyScript.Knockback();
 						enemyScript.health -= 50;
+						enemyScript.Knockback();
 					}
 					else
 					{
-						enemyScript.Knockback();
 						enemyScript.health -= 25;
+						enemyScript.Knockback();
 					}
 				}
 			}
