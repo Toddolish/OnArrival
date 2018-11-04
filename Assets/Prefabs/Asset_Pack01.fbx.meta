@@ -131,7 +131,37 @@ ModelImporter:
     4300042: Vines1
     4300044: Vines2
     2186277476908879412: ImportLogs
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bark_Texture03
+    second: {fileID: 2100000, guid: 88151f90e90a11948b8128b66e3e5ac3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bark_texture01
+    second: {fileID: 2100000, guid: 9b72b63c1f6437d4792cbcfec811364a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bark_texture03
+    second: {fileID: 2100000, guid: 88151f90e90a11948b8128b66e3e5ac3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Leaves_Texture02
+    second: {fileID: 2100000, guid: 3c094f029551a6647ae3fa85c6e4247c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Leaves_Texture03
+    second: {fileID: 2100000, guid: e70bdad2f1f974a4caff8b2d1bff1895, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Leaves_texture01
+    second: {fileID: 2100000, guid: 8789c2ef36bd91a46b4ae30d68ba7371, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
