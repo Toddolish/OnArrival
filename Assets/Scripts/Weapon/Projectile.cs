@@ -42,6 +42,11 @@ public class Projectile : MonoBehaviour {
 		Transform enemyTransform = collision.gameObject.GetComponent<Transform>();
 		CapsuleCollider enemyCollider = collision.gameObject.GetComponent<CapsuleCollider>();
 
+		if (collision.gameObject.tag == "noHit")
+		{
+			//Physics.IgnoreCollision(this.collider, collider);
+		}
+
 		// Stick into objects
 		if (collision.gameObject.tag == "Trees" || collision.gameObject.tag == "spikePlant")
 		{
