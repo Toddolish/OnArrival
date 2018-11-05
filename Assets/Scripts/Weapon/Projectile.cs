@@ -44,7 +44,7 @@ public class Projectile : MonoBehaviour {
 
 		if (collision.gameObject.tag == "noHit")
 		{
-			//Physics.IgnoreCollision(this.collider, collider);
+			//Physics.IgnoreCollision(this.collider, collision);
 		}
 
 		// Stick into objects
@@ -63,42 +63,22 @@ public class Projectile : MonoBehaviour {
 			rb.constraints = RigidbodyConstraints.FreezeAll;
 			flying = false;
 		}
-		// Stick into enemy if health is greater then 0
-		if (collision.gameObject.tag == "Enemy")
-		{
-			//if (enemyScript.health > 0)
-		    //{
-				enemyRigid.AddForce(transform.forward * enemyScript.burstForce, ForceMode.Impulse);
-				GameObject anchor = new GameObject("Javalin_Anchor");
-				anchor.transform.position = this.transform.position;
-				anchor.transform.rotation = this.transform.rotation;
-				anchor.transform.parent = collision.transform;
-				this.anchor = anchor.transform;
-				rb.isKinematic = true;
-				this.transform.GetComponent<CapsuleCollider>().isTrigger = true;
-				rb.constraints = RigidbodyConstraints.FreezeAll;
-				flying = false;
-				speed = 0;
-			//}
-		}
+		//enemyRigid.AddForce(transform.forward * enemyScript.burstForce, ForceMode.Impulse);
 		if (collision.gameObject.tag == "Crab" || collision.gameObject.tag == "SpikeJaw")
 		{
 			// Create a anchor point for arrow to follow
 			GameObject anchor = new GameObject("Javalin_Anchor");
 			anchor.transform.position = this.transform.position;
 			anchor.transform.rotation = this.transform.rotation;
-			// Parent the anchor point to the crap chold (0) which has the animation
-			anchor.transform.parent = collision.transform.GetChild(0);
+			// Parent the anchor point to the crap hold (0) which has the animation
+			anchor.transform.parent = collision.transform;
 			this.anchor = anchor.transform;
 			rb.isKinematic = true;
 			this.transform.GetComponent<CapsuleCollider>().isTrigger = true;
 			rb.constraints = RigidbodyConstraints.FreezeAll;
 			flying = false;
 			speed = 0;
-			if (enemyScript.health <= 5)
-			{
-				enemyRigid.AddForce(transform.forward * enemyScript.burstForce, ForceMode.Impulse);
-			}
+			//enemyRigid.AddForce(transform.forward * enemyScript.burstForce, ForceMode.Impulse);
 		}
 		// Parent the enemy to the projectile 
 		/*if(collision.gameObject.tag == "Enemy")

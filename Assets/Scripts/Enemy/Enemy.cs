@@ -30,6 +30,8 @@ public class Enemy : MonoBehaviour
 	public float playerAttackRange = 2;
 	public float knockbackForce = 5f;
 	public float decreaseSpeed = 1f;
+	public bool agro;
+	public float agroRange = 200f;
 
 	// Attack
 	public bool attacked = false;
@@ -61,7 +63,7 @@ public class Enemy : MonoBehaviour
 	private void Start()
 	{
 		SetKinematic(true);
-		collider = transform.GetChild(1).GetComponent<CapsuleCollider>();
+		collider = this.GetComponent<CapsuleCollider>();
 		animator = GetComponent<Animator>();
 		aiAgent = this.GetComponent<AIAgent>();
 		rb = GetComponent<Rigidbody>();
@@ -69,28 +71,16 @@ public class Enemy : MonoBehaviour
 		wanderScript = GetComponent<Wander>();
 		playerStats = GameObject.Find("Player").GetComponent<PlayerStats>();
 		target = GameObject.Find("Player").GetComponent<Transform>();
-
-		// Ragdoll
-
 	}
 	public void Update()
 	{
 		#region Enemy seek and Attack
-		sinkTime();
+		if (agro)
+		{
+			SeekRadius = agroRange;
+		}
 		ResetAttack();
         animator.SetFloat("Move", agent.speed);
-		if (SeekRadius < 20)
-		{
-			SeekRadius += Time.deltaTime;
-		}
-		if (SeekRadius > 20)
-		{
-			SeekRadius -= decreaseSpeed * Time.deltaTime;
-		}
-		if (SeekRadius > 40)
-		{
-			SeekRadius = 40;
-		}
 		float distance = Vector3.Distance(agent.transform.position, target.position);
 		float disToTarget = Vector3.Distance(transform.position, target.position);
 		#endregion
@@ -99,9 +89,9 @@ public class Enemy : MonoBehaviour
 		{
 			if (SeekRadius > disToTarget)
 			{
+				collider.enabled = true;
 				animator.SetBool("Run", true);
 				agent.speed = chaseSpeed;
-				//SeekRadius = 8;
 				wanderScript.enabled = false;
 				aiAgent.enabled = false;
 				agent.SetDestination(target.position); // not working because destination already being set in another script
@@ -110,9 +100,8 @@ public class Enemy : MonoBehaviour
 			else if (SeekRadius < disToTarget)
 			{
 				animator.SetBool("Run", false);
-				wanderScript.enabled = true;
-				aiAgent.enabled = true;
-				//SeekRadius = 5;
+				//wanderScript.enabled = true;
+				//aiAgent.enabled = true;
 				agent.speed = normalSpeed;
 			}
 		}
@@ -164,6 +153,7 @@ public class Enemy : MonoBehaviour
 		if (collision.gameObject.tag == "spike")
 		{
 			health -= 10;
+			agro = true;
 		}
 	}
 	private void OnTriggerEnter(Collider other)
@@ -229,18 +219,6 @@ public class Enemy : MonoBehaviour
 			rb.isKinematic = false;
 			rb.AddForce(-transform.forward * burstForce * 1.5f, ForceMode.Impulse);
 			rb.AddForce(transform.up * burstForce, ForceMode.Impulse);
-		}
-	}
-	void sinkTime()
-	{
-		if (startSinkFase)
-		{
-			sinkTimer += Time.deltaTime;
-		}
-		if (sinkTimer > 10)
-		{
-			collider.isTrigger = true;
-			sinkTimer = 0;
 		}
 	}
 }

@@ -50,8 +50,7 @@ public class Wander : SteeringBehaviour
         Vector3 seekPos = transform.position + targetDir;
         // Offset the seek position
         seekPos += transform.forward * offset;
-
-
+		
         #region GizmosGL
         GizmosGL.color = Color.red;
         GizmosGL.AddCircle(seekPos + Vector3.up * 0.2f, 0.5f, Quaternion.LookRotation(Vector3.down));
