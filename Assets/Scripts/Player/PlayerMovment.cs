@@ -35,7 +35,7 @@ public class PlayerMovment : MonoBehaviour
 	bool down;
 	#endregion
 	#region Ammo Collection 
-   [Header("Ammo Collection")]
+	[Header("Ammo Collection")]
 	// Collect ammo 
 	public bool pickup = false;
 	float pickupTimer;
@@ -53,16 +53,20 @@ public class PlayerMovment : MonoBehaviour
 	RaycastHit shootHit;
 	int shootableMask;
 	Enemy enemyScript;
-    #endregion
-    #region Beacon
-    [Header("Beacon Collection")]
-    //Beacon
-    // Create and index for beacons how many you have collected
-    public int beaconIndex;
-    public Text alreadyText;
-    #endregion
+	#endregion
+	#region Beacon
+	[Header("Beacon Collection")]
+	//Beacon
+	// Create and index for beacons how many you have collected
+	public int beaconIndex;
+	public Text alreadyText;
+	#endregion
+	#region Extract
+	bool extractReady;
+	float extractCooldown;
+	#endregion
 
-    public Text beaconText;
+	public Text beaconText;
 	void Start()
 	{
 		pulseReady = true;
@@ -76,9 +80,9 @@ public class PlayerMovment : MonoBehaviour
 	}
 	private void Update()
 	{
-        #region Methods
-        Extract();
-        Jump();
+		#region Methods
+		Extract();
+		Jump();
 		PulseCharge();
 		Sprinting();
 		#endregion
@@ -111,6 +115,8 @@ public class PlayerMovment : MonoBehaviour
 
 		controller.SimpleMove(forwardMovement + rightMovement);
 
+
+		//FindObjectOfType<AudioManager>().Play("Walk");
 		animMain.SetFloat("Walking", vertInput);
 	}
 	private void OnDrawGizmos()
@@ -120,86 +126,104 @@ public class PlayerMovment : MonoBehaviour
 	}
 	void Extract()
 	{
-        if (pickup)
-        {
-            collectText.enabled = false;
-            pickupTimer += Time.deltaTime;
-            if (pickupTimer > 0.5)
-            {
-                pickup = false;
-                pickupTimer = 0;
-            }
-        }
-
-        RaycastHit[] hits;
-		hits = Physics.SphereCastAll(transform.position, radius, transform.forward, range, spikePlant);
-
-		if (hits.Length > 0)
+		if (pickup)
 		{
-			for (int i = 0; i < hits.Length; i++)
+			collectText.enabled = false;
+			pickupTimer += Time.deltaTime;
+			if (pickupTimer > 0.5)
 			{
-				shootHit = hits[i];
-				SpikePlant spikePlant;
-				spikePlant = shootHit.transform.GetComponent<SpikePlant>();
-				if (spikePlant.curSap >= 2.4)
-				{
-					collectText.enabled = true;
-					if (Input.GetKeyDown(KeyCode.E) && spikePlant.timeForHarvest)
-					{
-						if (!pickup)
-						{
-							animMain.SetTrigger("Extract");
-						}
-					}
-				}
-
-				else
-				{
-					collectText.enabled = false;
-				}
+				pickup = false;
+				pickupTimer = 0;
 			}
 		}
-		if (hits.Length <= 0)
+		if (extractReady)
 		{
-			collectText.enabled = false; 
+			RaycastHit[] hits;
+			hits = Physics.SphereCastAll(transform.position, radius, transform.forward, range, spikePlant);
+
+			if (hits.Length > 0)
+			{
+				for (int i = 0; i < hits.Length; i++)
+				{
+					shootHit = hits[i];
+					SpikePlant spikePlant;
+					spikePlant = shootHit.transform.GetComponent<SpikePlant>();
+					if (spikePlant.curSap >= 2.4)
+					{
+						collectText.enabled = true;
+						if (Input.GetKeyDown(KeyCode.E) && spikePlant.timeForHarvest)
+						{
+							if (!pickup)
+							{
+								extractReady = false;
+								animMain.SetTrigger("Extract");
+							}
+						}
+					}
+					else
+					{
+						collectText.enabled = false;
+					}
+				}
+			}
+
+			if (hits.Length <= 0)
+			{
+				collectText.enabled = false;
+			}
+		}
+
+		if (!extractReady)
+		{
+			extractCooldown += Time.deltaTime;
+			if (extractCooldown > 1)
+			{
+				extractReady = true;
+				extractCooldown = 0;
+			}
 		}
 	}
 	private void OnTriggerStay(Collider other)
 	{
-        if (other.gameObject.tag == "Beacon")
-        {
-            beaconText.enabled = true;
-            if (beaconIndex == 0)
-            {
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    // Increase beacon index
-                    // Disable Beacon Text
-                    beaconIndex++;
-                    beaconText.enabled = false;
-                    Destroy(other.gameObject);
-                }
-            }
-        }
-    }
-    public void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Beacon")
-        {
-            beaconText.enabled = false;
-        }
-    }
+		if (other.gameObject.tag == "Beacon")
+		{
+			beaconText.enabled = true;
+			if (beaconIndex == 0)
+			{
+				if (Input.GetKeyDown(KeyCode.E))
+				{
+					FindObjectOfType<AudioManager>().Play("Pickup");
+					// Increase beacon index
+					// Disable Beacon Text
+					beaconIndex++;
+					beaconText.enabled = false;
+					Destroy(other.gameObject);
+				}
+			}
+		}
+	}
+	public void OnTriggerExit(Collider other)
+	{
+		if (other.gameObject.tag == "Beacon")
+		{
+			beaconText.enabled = false;
+		}
+	}
 	public void PulseCharge()
 	{
 		// If pulseReady is true it can be used with middle mouse button
 		if (pulseReady && Input.GetKeyDown(KeyCode.Mouse2))
 		{
-            animMain.SetTrigger("Palm");
-            if (weapon.javAmmoCartridge > 0)
-            {
-                weapon.javAmmoCartridge --;
-            }
-        }
+			// Melee skill
+			animMain.SetTrigger("Palm");
+			FindObjectOfType<AudioManager>().Play("Melee");
+			// Pulse charge skill
+			if (weapon.javAmmoCartridge > 0)
+			{
+				FindObjectOfType<AudioManager>().Play("Pulse");
+				weapon.javAmmoCartridge--;
+			}
+		}
 		if (!pulseReady)
 		{
 			pulseTimer += Time.deltaTime;
@@ -212,21 +236,21 @@ public class PlayerMovment : MonoBehaviour
 	}
 	public void Sprinting()
 	{
-        // When player stop sprinting
-        // Stop walk animation
-        if (aimScript.aiming)
-        {
-            animMain.SetBool("Sprinting", false);
-            animMain.SetFloat("Walking", 0);
-            moveSpeed = startMoveSpeed;
-            sprint = false;
-        }
-        else
-        {
-            // I dont know!
-        }
+		// When player stop sprinting
+		// Stop walk animation
+		if (aimScript.aiming)
+		{
+			animMain.SetBool("Sprinting", false);
+			animMain.SetFloat("Walking", 0);
+			moveSpeed = startMoveSpeed;
+			sprint = false;
+		}
+		else
+		{
+			// I dont know!
+		}
 
-        if (!aimScript.aiming)
+		if (!aimScript.aiming)
 		{
 			if (playerStats.cannotSprint == false)
 			{
@@ -265,67 +289,67 @@ public class PlayerMovment : MonoBehaviour
 		SpikePlant spikePlant;
 		if (spikePlant = shootHit.transform.GetComponent<SpikePlant>())
 		{
-            if (!spikePlant.collectHealth)
-            {
-                spikePlant.curSap = 0;
-                weapon.AddSpikeAmmoCapsule();
-                pickup = true;
-            }
-            if (spikePlant.collectHealth)
-            {
-                spikePlant.curSap = 0;
-                playerStats.addHealth();
-                pickup = true;
-            }
-        }
-	}
-	public void PulseDischarge()
-	{
-		Debug.Log("use pulse skill");
-		RaycastHit[] hits;
-		hits = Physics.SphereCastAll(transform.position, radius, transform.forward, range);
-
-		if (hits.Length > 0)
-		{
-			for (int i = 0; i < hits.Length; i++)
+			if (!spikePlant.collectHealth)
 			{
-				Debug.Log("Searching for enemy script");
-				Debug.Log(hits[i].collider.name);
-				shootHit = hits[i];
-				if (enemyScript = shootHit.collider.gameObject.GetComponent<Enemy>())
+				spikePlant.curSap = 0;
+				weapon.AddSpikeAmmoCapsule();
+				pickup = true;
+			}
+			if (spikePlant.collectHealth)
+			{
+				spikePlant.curSap = 0;
+				playerStats.addHealth();
+				pickup = true;
+			}
+		}
+	}
+public void PulseDischarge()
+{
+	Debug.Log("use pulse skill");
+	RaycastHit[] hits;
+	hits = Physics.SphereCastAll(transform.position, radius, transform.forward, range);
+
+	if (hits.Length > 0)
+	{
+		for (int i = 0; i < hits.Length; i++)
+		{
+			Debug.Log("Searching for enemy script");
+			Debug.Log(hits[i].collider.name);
+			shootHit = hits[i];
+			if (enemyScript = shootHit.collider.gameObject.GetComponent<Enemy>())
+			{
+				if (weapon.javAmmoCartridge > 0)
 				{
-					if (weapon.javAmmoCartridge > 0)
-					{
-						enemyScript.health -= 50;
-						enemyScript.Knockback();
-					}
-					else
-					{
-						enemyScript.health -= 25;
-						enemyScript.Knockback();
-					}
+					enemyScript.health -= 50;
+					enemyScript.Knockback();
+				}
+				else
+				{
+					enemyScript.health -= 25;
+					enemyScript.Knockback();
 				}
 			}
 		}
-		// Shoot projectiles like a shotgun and knockback enemies
-		// Once used timer will start a countdown and pulseReady will be false as it is no longer ready
-		pulseReady = false;
 	}
-	private IEnumerator JumpEvent()
+	// Shoot projectiles like a shotgun and knockback enemies
+	// Once used timer will start a countdown and pulseReady will be false as it is no longer ready
+	pulseReady = false;
+}
+private IEnumerator JumpEvent()
+{
+	//controller.slopeLimit = 90f;
+	float timeInAir = 0.0f;
+
+	do
 	{
-		//controller.slopeLimit = 90f;
-		float timeInAir = 0.0f;
-
-		do
-		{
-			float jumpForce = jumpFallOff.Evaluate(timeInAir);
-			controller.Move(Vector3.up * jumpForce * jumpMultiplier * Time.deltaTime);
-			timeInAir += Time.deltaTime;
-			yield return null;
-		}
-		while (!controller.isGrounded && controller.collisionFlags != CollisionFlags.Above);
-
-		controller.slopeLimit = 45f;
-		isJumping = false;
+		float jumpForce = jumpFallOff.Evaluate(timeInAir);
+		controller.Move(Vector3.up * jumpForce * jumpMultiplier * Time.deltaTime);
+		timeInAir += Time.deltaTime;
+		yield return null;
 	}
+	while (!controller.isGrounded && controller.collisionFlags != CollisionFlags.Above);
+
+	controller.slopeLimit = 45f;
+	isJumping = false;
+}
 }

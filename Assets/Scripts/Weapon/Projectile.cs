@@ -83,10 +83,6 @@ public class Projectile : MonoBehaviour {
 		}
 		if (collision.gameObject.tag == "Crab" || collision.gameObject.tag == "SpikeJaw")
 		{
-			if (enemyScript.health <= 5)
-			{
-				enemyRigid.AddForce(transform.forward * enemyScript.burstForce, ForceMode.Impulse);
-			}
 			// Create a anchor point for arrow to follow
 			GameObject anchor = new GameObject("Javalin_Anchor");
 			anchor.transform.position = this.transform.position;
@@ -99,6 +95,10 @@ public class Projectile : MonoBehaviour {
 			rb.constraints = RigidbodyConstraints.FreezeAll;
 			flying = false;
 			speed = 0;
+			if (enemyScript.health <= 5)
+			{
+				enemyRigid.AddForce(transform.forward * enemyScript.burstForce, ForceMode.Impulse);
+			}
 		}
 		// Parent the enemy to the projectile 
 		/*if(collision.gameObject.tag == "Enemy")

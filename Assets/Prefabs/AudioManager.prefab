@@ -33,8 +33,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1200773257850344}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 69.608536, y: 38.456177, z: 72.49936}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 62.990494, y: -219.85934, z: -102.228516}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -78,7 +78,37 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - name: Shoot
-    clip: {fileID: 8300000, guid: 01437268a95fb6847b20d1f9cf607eb7, type: 3}
+    clip: {fileID: 8300000, guid: bd0de2a56aa2830429cbaf8dab6d8fc0, type: 3}
+    volume: 1
+    pitch: 1.4
+    loop: 0
+    source: {fileID: 0}
+  - name: Pickup
+    clip: {fileID: 8300000, guid: 9df05e2f7191ed14e8b31d5a0e918efa, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Place
+    clip: {fileID: 8300000, guid: b7c5c30a87dc4914380d4ab2fd062dc9, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Melee
+    clip: {fileID: 8300000, guid: 8ac07f14970eb844f9b737969479dd7b, type: 3}
+    volume: 1
+    pitch: 0.6
+    loop: 0
+    source: {fileID: 0}
+  - name: Pulse
+    clip: {fileID: 8300000, guid: bbdd11d084aed40428a972fa04df47fc, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Walk
+    clip: {fileID: 8300000, guid: f339e45954b2ce44ca2e0ed0317cf217, type: 3}
     volume: 1
     pitch: 1
     loop: 0

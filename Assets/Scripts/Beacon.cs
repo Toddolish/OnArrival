@@ -45,9 +45,10 @@ public class Beacon : MonoBehaviour
                 placeText.enabled = true;
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    // when (E) is pressed place a beacon
-                    // Player beaconIndex = -1
-                    playerMove.beaconIndex--;
+					FindObjectOfType<AudioManager>().Play("Place");
+					// when (E) is pressed place a beacon
+					// Player beaconIndex = -1
+					playerMove.beaconIndex--;
                     beaconCount++;
                 }
             }

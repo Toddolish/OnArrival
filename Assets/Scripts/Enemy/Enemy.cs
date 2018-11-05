@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
 	public float normalSpeed = 3.5f;
 	public float chaseSpeed = 7.0f;
 	Animator animator;
-	MeshCollider collider;
+	CapsuleCollider collider;
 	public float burstForce = 2f;
 	bool isDestroyed;
 	Wander wanderScript;
@@ -22,6 +22,8 @@ public class Enemy : MonoBehaviour
 	Weapon weaponScript;
 	PlayerStats playerStats;
 	public GameObject explosion;
+
+	// Ragdoll
 
 	// Player detection
 	public float SeekRadius = 10f;
@@ -37,19 +39,29 @@ public class Enemy : MonoBehaviour
 	float attackAfterTime = 1;
 	bool attackInRange;
 
-	//Enemy sink
+	// Enemy sink
 	float sinkTimer;
 	bool startSinkFase;
-
-	//Enemy Knockback 
-	//take minor melee damage
+	
+	// Enemy Knockback 
+	// Take minor melee damage
 	float resetTime;
 	bool knockedBack;
-	
+
+	void SetKinematic(bool newValue)
+	{
+		Rigidbody[] bodies = GetComponentsInChildren<Rigidbody>();
+
+		foreach (Rigidbody rb in bodies)
+		{
+			rb.isKinematic = newValue;
+		}
+	}
 
 	private void Start()
 	{
-		collider = transform.GetChild(1).GetComponent<MeshCollider>();
+		SetKinematic(true);
+		collider = transform.GetChild(1).GetComponent<CapsuleCollider>();
 		animator = GetComponent<Animator>();
 		aiAgent = this.GetComponent<AIAgent>();
 		rb = GetComponent<Rigidbody>();
@@ -57,6 +69,9 @@ public class Enemy : MonoBehaviour
 		wanderScript = GetComponent<Wander>();
 		playerStats = GameObject.Find("Player").GetComponent<PlayerStats>();
 		target = GameObject.Find("Player").GetComponent<Transform>();
+
+		// Ragdoll
+
 	}
 	public void Update()
 	{
@@ -166,10 +181,12 @@ public class Enemy : MonoBehaviour
 	}
 	void Destroy()
 	{
-		//ssDestroy(this.gameObject);
+		//Destroy(this.gameObject);
 		//Instantiate(explosion, transform.position, transform.rotation);
-		rb.constraints = RigidbodyConstraints.None;
-        //startSinkFase = true;
+		//rb.constraints = RigidbodyConstraints.None;
+		//startSinkFase = true;
+
+		SetKinematic(false);
 		animator.enabled = false;
 		agent.enabled = false;
 		aiAgent.enabled = false;
