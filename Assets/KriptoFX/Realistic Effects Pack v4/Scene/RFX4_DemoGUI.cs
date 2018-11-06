@@ -13,7 +13,7 @@ public class RFX4_DemoGUI : MonoBehaviour
     public Light[] NightLights = new Light[0];
     public Texture HUETexture;
     public bool UseMobileVersion;
-    public RFX4_DistortionAndBloom RFX4_DistortionAndBloom;
+    //public RFX4_DistortionAndBloom RFX4_DistortionAndBloom;
 
 	private int currentNomber;
 	private GameObject currentInstance;
@@ -76,7 +76,7 @@ public class RFX4_DemoGUI : MonoBehaviour
                 (!isButtonPressed && Input.GetKeyDown(KeyCode.DownArrow)))
             {
                 isUsedMobileBloom = !isUsedMobileBloom;
-                RFX4_DistortionAndBloom.UseBloom = isUsedMobileBloom;
+                //RFX4_DistortionAndBloom.UseBloom = isUsedMobileBloom;
             }
             //if(!isUsedMobileBloom) guiStyleHeaderMobile.normal.textColor = new Color(0.8f, 0.2f, 0.2f);
             //else guiStyleHeaderMobile.normal.textColor = new Color(0.1f, 0.6f, 0.1f);
