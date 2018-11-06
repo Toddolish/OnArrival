@@ -23,28 +23,24 @@ public class Enemy : MonoBehaviour
 	PlayerStats playerStats;
 	public GameObject explosion;
 
-	// Ragdoll
-
-	// Player detection
+	[Header("Player Detection")]
 	public float SeekRadius = 10f;
-	public float playerAttackRange = 2;
 	public float knockbackForce = 5f;
 	public float decreaseSpeed = 1f;
+
+	[Header("Agro")]
 	public bool agro;
 	public float agroRange = 200f;
 
-	// Attack
+	[Header("Attack")]
 	public bool attacked = false;
 	public float attackTimer;
 	float timer;
 	float attackRangeTimer = 0;
 	float attackAfterTime = 1;
 	bool attackInRange;
+	public float AttackRange = 2;
 
-	// Enemy sink
-	float sinkTimer;
-	bool startSinkFase;
-	
 	// Enemy Knockback 
 	// Take minor melee damage
 	float resetTime;
@@ -71,6 +67,7 @@ public class Enemy : MonoBehaviour
 		wanderScript = GetComponent<Wander>();
 		playerStats = GameObject.Find("Player").GetComponent<PlayerStats>();
 		target = GameObject.Find("Player").GetComponent<Transform>();
+		collider.enabled = false;
 	}
 	public void Update()
 	{
@@ -80,7 +77,7 @@ public class Enemy : MonoBehaviour
 			SeekRadius = agroRange;
 		}
 		ResetAttack();
-        animator.SetFloat("Move", agent.speed);
+		animator.SetFloat("Move", agent.speed);
 		float distance = Vector3.Distance(agent.transform.position, target.position);
 		float disToTarget = Vector3.Distance(transform.position, target.position);
 		#endregion
@@ -107,9 +104,9 @@ public class Enemy : MonoBehaviour
 		}
 		if (health <= 0)
 		{
-				this.gameObject.tag = "noHit";
-				this.gameObject.layer = LayerMask.NameToLayer("Ignore");
-				Destroy();
+			this.gameObject.tag = "noHit";
+			this.gameObject.layer = LayerMask.NameToLayer("Ignore");
+			Destroy();
 		}
 		#endregion
 		#region Knockback
@@ -134,7 +131,7 @@ public class Enemy : MonoBehaviour
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireSphere(transform.position, SeekRadius);
 		Gizmos.color = Color.blue;
-		Gizmos.DrawWireSphere(transform.position, playerAttackRange);
+		Gizmos.DrawWireSphere(transform.position, AttackRange);
 	}
 	public void TakeDamage(float amount)
 	{
@@ -153,7 +150,10 @@ public class Enemy : MonoBehaviour
 		if (collision.gameObject.tag == "spike")
 		{
 			health -= 10;
-			agro = true;
+			if (agro != true)
+			{
+				agro = true;
+			}
 		}
 	}
 	private void OnTriggerEnter(Collider other)
@@ -174,13 +174,11 @@ public class Enemy : MonoBehaviour
 		//Destroy(this.gameObject);
 		//Instantiate(explosion, transform.position, transform.rotation);
 		//rb.constraints = RigidbodyConstraints.None;
-		//startSinkFase = true;
-
 		SetKinematic(false);
 		animator.enabled = false;
 		agent.enabled = false;
 		aiAgent.enabled = false;
-    }
+	}
 	void ResetAttack()
 	{
 		if (attacked)
@@ -198,27 +196,24 @@ public class Enemy : MonoBehaviour
 	{
 		float distance = Vector3.Distance(agent.transform.position, target.position);
 		float disToTarget = Vector3.Distance(transform.position, target.position);
-		// check if player is in range
-		if (playerAttackRange > disToTarget)
+		// Check if player is in range
+		if (AttackRange > disToTarget)
 		{
 			playerStats.curHealth -= 25;
-            playerStats.SplashDamage();
+			playerStats.SplashDamage();
 		}
 	}
 	public void Knockback()
 	{
-		//if enemy health above 0 then do a knockback
+		if (health <= 0)
+		{
+			SetKinematic(false); // Make sure to set kinematic false before any knockback occurs
+			rb.AddForce(-transform.forward * burstForce * 2f, ForceMode.Impulse);
+			rb.AddForce(transform.up * burstForce * 1f, ForceMode.Impulse);
+		}
 		if (health > 0)
 		{
 			knockedBack = true;
-		}
-
-		//if enemy health less <= to zero then do a death knockback
-		if (health <= 0)
-		{
-			rb.isKinematic = false;
-			rb.AddForce(-transform.forward * burstForce * 1.5f, ForceMode.Impulse);
-			rb.AddForce(transform.up * burstForce, ForceMode.Impulse);
 		}
 	}
 }

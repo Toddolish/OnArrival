@@ -49,7 +49,7 @@ public class Weapon : MonoBehaviour
 
 	void Start()
 	{
-		currentJavAmmo = maxJavAmmo;
+		currentJavAmmo = 0;
 		javAmmoBar = GameObject.Find("LiquidParent").GetComponent<Transform>();
 		canisterHoldingPoint = GameObject.Find("CanisterHolderPoint").GetComponent<Transform>();
 		playerMove = GameObject.Find("Player").GetComponent<PlayerMovment>();

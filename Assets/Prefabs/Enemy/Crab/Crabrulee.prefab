@@ -572,6 +572,8 @@ MonoBehaviour:
   playerAttackRange: 2
   knockbackForce: 5
   decreaseSpeed: 1
+  agro: 0
+  agroRange: 200
   attacked: 0
   attackTimer: 0
 --- !u!135 &135189578240805918
@@ -739,7 +741,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1291997300251508}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 1.39
   m_Height: 2.0522385
   m_Direction: 1

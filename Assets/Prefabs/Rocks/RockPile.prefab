@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33698671283210224}
   - component: {fileID: 23045335383669952}
   - component: {fileID: 64430672682250826}
+  - component: {fileID: 208752070241497422}
   m_Layer: 11
   m_Name: RockPile
   m_TagString: Trees
@@ -98,3 +99,18 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300028, guid: 9e8b19294b3627e4b88421b31e8a1dbc, type: 3}
+--- !u!208 &208752070241497422
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1313565644374608}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.83300006, y: 0.034, z: 0.34300002}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.007, y: 0, z: 0}
+  m_TimeToStationary: 0.5

@@ -53,6 +53,8 @@ public class PlayerMovment : MonoBehaviour
 	RaycastHit shootHit;
 	int shootableMask;
 	Enemy enemyScript;
+	public GameObject pulseEffect;
+	public Transform pulseEffectSpawnPoint;
 	#endregion
 	#region Beacon
 	[Header("Beacon Collection")]
@@ -183,6 +185,14 @@ public class PlayerMovment : MonoBehaviour
 			}
 		}
 	}
+	public void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.tag == "Void")
+		{
+			// Player must respawn
+			playerStats.GameOver();
+		}
+	}
 	private void OnTriggerStay(Collider other)
 	{
 		if (other.gameObject.tag == "Beacon")
@@ -216,7 +226,7 @@ public class PlayerMovment : MonoBehaviour
 		{
 			// Melee skill
 			animMain.SetTrigger("Palm");
-			FindObjectOfType<AudioManager>().Play("Melee");
+			//FindObjectOfType<AudioManager>().Play("Melee");
 			// Pulse charge skill
 			if (weapon.javAmmoCartridge > 0)
 			{
@@ -309,6 +319,8 @@ public void PulseDischarge()
 	RaycastHit[] hits;
 	hits = Physics.SphereCastAll(transform.position, radius, transform.forward, range);
 
+	GameObject dischargeEffect = Instantiate(pulseEffect, pulseEffectSpawnPoint.position, pulseEffectSpawnPoint.rotation);
+	dischargeEffect.transform.parent = pulseEffectSpawnPoint.transform;
 	if (hits.Length > 0)
 	{
 		for (int i = 0; i < hits.Length; i++)
